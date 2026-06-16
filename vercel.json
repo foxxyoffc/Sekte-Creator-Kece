@@ -1,0 +1,144 @@
+{
+  "version": 2,
+  "buildCommand": null,
+  "devCommand": null,
+  "installCommand": null,
+  "framework": null,
+  "outputDirectory": ".",
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.html",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/js/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/pages/(.*)",
+      "dest": "/pages/$1"
+    },
+    {
+      "src": "/pages/struktur.html",
+      "dest": "/pages/struktur.html"
+    },
+    {
+      "src": "/pages/tentang.html",
+      "dest": "/pages/tentang.html"
+    },
+    {
+      "src": "/pages/join.html",
+      "dest": "/pages/join.html"
+    },
+    {
+      "src": "/pages/event.html",
+      "dest": "/pages/event.html"
+    },
+    {
+      "src": "/pages/alat-bantu.html",
+      "dest": "/pages/alat-bantu.html"
+    },
+    {
+      "src": "/pages/set-web.html",
+      "dest": "/pages/set-web.html"
+    },
+    {
+      "src": "/pages/only-developer.html",
+      "dest": "/pages/only-developer.html"
+    },
+    {
+      "src": "/pages/login.html",
+      "dest": "/pages/login.html"
+    },
+    {
+      "src": "/pages/download-tiktok.html",
+      "dest": "/pages/download-tiktok.html"
+    },
+    {
+      "src": "/pages/download-pinterest.html",
+      "dest": "/pages/download-pinterest.html"
+    },
+    {
+      "src": "/pages/download-youtube.html",
+      "dest": "/pages/download-youtube.html"
+    },
+    {
+      "src": "/pages/download-instagram.html",
+      "dest": "/pages/download-instagram.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/css/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/css"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/js/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, immutable"
+        }
+      ]
+    }
+  ]
+}
