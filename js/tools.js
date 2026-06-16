@@ -51,8 +51,7 @@ async function downloadTikTok() {
     }
 }
 
-// ========== PINTEREST DOWNLOADER ==========
-
+        // ========== PINTEREST DOWNLOADER ==========
 async function downloadPinterest() {
     const urlInput = document.getElementById('pinterestUrl');
     const resultDiv = document.getElementById('pinterestResult');
@@ -66,16 +65,11 @@ async function downloadPinterest() {
     resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses...</div>';
     
     try {
-        const response = await fetch(`https://pinterest-video-downloader.p.rapidapi.com/url?url=${encodeURIComponent(url)}`, {
-            headers: {
-                'x-rapidapi-key': 'YOUR_API_KEY_HERE',
-                'x-rapidapi-host': 'pinterest-video-downloader.p.rapidapi.com'
-            }
-        });
-        
+        // Coba pake API alternatif
+        const response = await fetch(`https://pinterestdownloader.io/api/download?url=${encodeURIComponent(url)}`);
         const data = await response.json();
         
-        if (data && data.media_url) {
+        if (data.success && data.media_url) {
             const mediaUrl = data.media_url;
             const isVideo = mediaUrl.includes('.mp4') || mediaUrl.includes('.mov');
             const title = data.title || 'Pinterest Media';
@@ -102,111 +96,78 @@ async function downloadPinterest() {
                 `;
             }
         } else {
+            // Tampilkan opsi manual + salin link
             resultDiv.innerHTML = `
                 <div class="video-preview">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i> Untuk download Pinterest, silakan buka link langsung:<br>
-                        <a href="${url}" target="_blank" style="color: var(--neon-blue); word-break: break-all;">${url}</a><br><br>
-                        <small>Atau gunakan situs seperti pinterestdownloader.com untuk hasil maksimal.</small>
+                    <div class="alert alert-info" style="margin-bottom: 15px;">
+                        <i class="fas fa-info-circle"></i> API gagal memproses. Gunakan opsi di bawah ini:
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <input type="text" id="pinterestManualUrl" value="${url}" readonly style="flex: 1; padding: 10px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px; color: var(--text-primary);">
+                            <button onclick="copyPinterestUrl()" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue); padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;">
+                                <i class="fas fa-copy"></i> Salin Link
+                            </button>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                            <a href="https://pinterestdownloader.com" target="_blank" class="download-link" style="background: var(--neon-blue); color: var(--dark-bg);">
+                                <i class="fas fa-external-link-alt"></i> Buka Pinterest Downloader
+                            </a>
+                            <a href="${url}" target="_blank" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue);">
+                                <i class="fas fa-external-link-alt"></i> Buka di Pinterest
+                            </a>
+                        </div>
                     </div>
                 </div>
             `;
         }
     } catch (error) {
         console.error('Pinterest Download Error:', error);
+        // Tampilkan opsi manual
         resultDiv.innerHTML = `
             <div class="video-preview">
-                <div class="alert alert-info">
-                    <i class="fas fa-exclamation-triangle"></i> Gagal memproses.<br>
-                    <a href="${url}" target="_blank" style="color: var(--neon-blue);">Buka langsung di Pinterest</a>
+                <div class="alert alert-info" style="margin-bottom: 15px;">
+                    <i class="fas fa-exclamation-triangle"></i> Terjadi kesalahan. Gunakan opsi di bawah ini:
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <input type="text" id="pinterestManualUrl" value="${url}" readonly style="flex: 1; padding: 10px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px; color: var(--text-primary);">
+                        <button onclick="copyPinterestUrl()" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue); padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;">
+                            <i class="fas fa-copy"></i> Salin Link
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                        <a href="https://pinterestdownloader.com" target="_blank" class="download-link" style="background: var(--neon-blue); color: var(--dark-bg);">
+                            <i class="fas fa-external-link-alt"></i> Buka Pinterest Downloader
+                        </a>
+                        <a href="${url}" target="_blank" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue);">
+                            <i class="fas fa-external-link-alt"></i> Buka di Pinterest
+                        </a>
+                    </div>
                 </div>
             </div>
         `;
     }
 }
 
-// ========== YOUTUBE DOWNLOADER ==========
-
-async function downloadYouTube(type = 'video') {
-    const urlInput = document.getElementById('youtubeUrl');
-    const resultDiv = document.getElementById('youtubeResult');
-    const url = urlInput.value.trim();
-    
-    if (!url) {
-        alert('Masukkan URL YouTube terlebih dahulu!');
-        return;
-    }
-    
-    resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses video...</div>';
-    
-    try {
-        const apiUrl = `https://api.ryzendesu.vip/api/downloader/ytmp4?url=${encodeURIComponent(url)}`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-        if (data.status === 200 || data.url) {
-            const videoUrl = data.url || data.download_url;
-            const title = data.title || 'YouTube Video';
-            const duration = data.duration || 'Unknown';
-            const quality = type === 'video' ? (data.quality || '720p') : 'MP3 Audio';
-            
-            if (type === 'video') {
-                resultDiv.innerHTML = `
-                    <div class="video-preview">
-                        <video src="${videoUrl}" controls></video>
-                        <div class="video-info">
-                            <p><strong><i class="fab fa-youtube"></i> Judul:</strong> ${title}</p>
-                            <p><strong><i class="fas fa-clock"></i> Durasi:</strong> ${duration}</p>
-                            <p><strong><i class="fas fa-tachometer-alt"></i> Kualitas:</strong> ${quality}</p>
-                            <a href="${videoUrl}" download class="download-link"><i class="fas fa-download"></i> Download Video (${quality})</a>
-                        </div>
-                    </div>
-                `;
+// ========== COPY PINTEREST URL ==========
+function copyPinterestUrl() {
+    const urlInput = document.getElementById('pinterestManualUrl');
+    if (urlInput) {
+        navigator.clipboard.writeText(urlInput.value).then(() => {
+            const btn = document.querySelector('button[onclick="copyPinterestUrl()"]');
+            if (btn) {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+                setTimeout(() => { btn.innerHTML = originalText; }, 2000);
             } else {
-                const audioApi = `https://api.ryzendesu.vip/api/downloader/ytmp3?url=${encodeURIComponent(url)}`;
-                const audioResponse = await fetch(audioApi);
-                const audioData = await audioResponse.json();
-                const audioUrl = audioData.url || audioData.download_url;
-                
-                resultDiv.innerHTML = `
-                    <div class="video-preview">
-                        <div style="text-align: center; padding: 20px;">
-                            <i class="fas fa-music" style="font-size: 3rem; color: var(--neon-blue);"></i>
-                        </div>
-                        <div class="video-info">
-                            <p><strong><i class="fab fa-youtube"></i> Judul:</strong> ${title}</p>
-                            <p><strong><i class="fas fa-clock"></i> Durasi:</strong> ${duration}</p>
-                            <p><strong><i class="fas fa-file-audio"></i> Format:</strong> MP3</p>
-                            <a href="${audioUrl}" download class="download-link"><i class="fas fa-download"></i> Download Audio (MP3)</a>
-                        </div>
-                    </div>
-                `;
+                alert('Link berhasil disalin!');
             }
-        } else {
-            resultDiv.innerHTML = `
-                <div class="video-preview">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i> Untuk download YouTube, silakan gunakan situs alternatif:<br><br>
-                        <a href="https://yt1s.com" target="_blank" style="color: var(--neon-blue); margin-right: 15px;">yt1s.com</a>
-                        <a href="https://savefrom.net" target="_blank" style="color: var(--neon-blue); margin-right: 15px;">savefrom.net</a>
-                        <a href="https://y2mate.com" target="_blank" style="color: var(--neon-blue);">y2mate.com</a>
-                    </div>
-                </div>
-            `;
-        }
-    } catch (error) {
-        console.error('YouTube Download Error:', error);
-        resultDiv.innerHTML = `
-            <div class="video-preview">
-                <div class="alert alert-info">
-                    <i class="fas fa-exclamation-triangle"></i> Gagal memproses.<br><br>
-                    <a href="https://yt1s.com" target="_blank" style="color: var(--neon-blue);">Klik di sini untuk download via yt1s.com</a>
-                </div>
-            </div>
-        `;
+        }).catch(() => {
+            alert('Link: ' + urlInput.value);
+        });
     }
 }
-
 // ========== INSTAGRAM DOWNLOADER ==========
 
 async function downloadInstagram() {
