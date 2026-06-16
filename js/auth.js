@@ -2,15 +2,15 @@
 
 // Default credentials (bisa diubah via Only Developer page)
 let validCredentials = JSON.parse(localStorage.getItem('adminCredentials')) || [
-    { username: 'owner', password: 'sck2025', role: 'owner' },
-    { username: 'admin1', password: 'admin123', role: 'admin' },
-    { username: 'moderator', password: 'mod123', role: 'moderator' }
+    { username: 'nowamura', password: 'nowa001', role: 'owner' },
+    { username: 'rorandokkodok', password: 'rora001', role: 'co-owner 02' },
+    { username: 'foxxybziir', password: 'foxxy001', role: 'co-owner 01' }
 ];
 
 // Developer credentials (hanya untuk Only Developer page)
 let devCredentials = JSON.parse(localStorage.getItem('devCredentials')) || [
-    { username: 'raps', password: 'sektecreator123' },
-    { username: 'developer', password: 'dev2025' }
+    { username: 'foxxy', password: 'foxxy_001' },
+    { username: 'nowamura', password: 'nowamura_001' }
 ];
 
 // Save credentials to localStorage
@@ -146,23 +146,24 @@ function removeDevUser(username) {
 
 // Default structure data
 let organizationData = JSON.parse(localStorage.getItem('organizationData')) || {
-    owner: { name: 'Raps', wa: '6281234567890', bio: 'Founder & Creator, pecinta teknologi dan komunitas' },
+    owner: { name: 'Nowamura', wa: '6283847663188', bio: 'Owner/Founder, pecinta lanang, ati ati aja🗿' },
     coOwners: [
-        { name: 'Alex', wa: '6281234567891', bio: 'Co-Founder, ahli strategi' },
-        { name: 'Budi', wa: '6281234567892', bio: 'Co-Founder, kreator konten' }
+        { name: 'Foxxybziir', wa: '6281997149736', bio: 'Co-Founder/Co-Owner/Developer, gw ganteng banget pokoknya (kata mak gw)' },
+        { name: 'Rorandokkodok', wa: '6283872836975', bio: 'Co-Founder/Co-Owner, sefuhh japanese, minus bisu dikit🗿' }
     ],
     leaders: [
-        { division: 'Divisi Creative', name: 'Citra', wa: '6281234567893', bio: 'Lead Designer, suka desain grafis' },
-        { division: 'Divisi Tech', name: 'Dito', wa: '6281234567894', bio: 'Lead Developer, expert in coding' }
+        { division: 'Divisi 02', name: 'LukaFekfek', wa: '6282318999818', bio: 'Leader Div 02, Pecinta Mommy' },
+        { division: 'Divisi 02', name: 'Jemxnxx', wa: '6285157038644', bio: 'Lead Div 02, Babu admin🗿' }
     ],
     divisions: [
-        { name: 'Divisi Creative', members: 25 },
-        { name: 'Divisi Tech', members: 30 },
-        { name: 'Divisi Event', members: 20 },
-        { name: 'Divisi Marketing', members: 15 }
+        { name: 'Total Anggota', members: 162 },
+        { name: 'Total Divisi', divisi: 02 },
+        { name: 'Divisi 01', members: 63 },
+        { name: 'Divisi 02', members: 17 },
+        { name: 'SCK Family', members: 19 }
     ],
-    profileImage: 'https://via.placeholder.com/150x150?text=SCK',
-    heroVideoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-digital-particles-in-motion-1070-large.mp4'
+    profileImage: 'https://j.top4top.io/p_38195t90r1.jpg',
+    heroVideoUrl: 'https://d.top4top.io/m_3819tiava1.mp4'
 };
 
 // Save organization data
@@ -298,7 +299,7 @@ let eventData = JSON.parse(localStorage.getItem('eventData')) || {
     hasEvent: false,
     imageUrl: '',
     description: '',
-    contacts: ['6281234567890', '6281234567891', '6281234567892']
+    contacts: ['6281997149736', '6283872836975', '6283847663188']
 };
 
 function saveEventData() {
@@ -336,8 +337,8 @@ function updateEventContact(index, waNumber) {
 // ========== JOIN LINKS MANAGEMENT ==========
 
 let joinLinks = JSON.parse(localStorage.getItem('joinLinks')) || {
-    seleksi: { title: 'Link Seleksi', description: 'Klik untuk bergabung ke grup seleksi', url: 'https://chat.whatsapp.com/xxxxx' },
-    family: { title: 'SCK FAMILY', description: 'Klik untuk bergabung ke grup utama SCK', url: 'https://chat.whatsapp.com/xxxxx' }
+    seleksi: { title: 'Link Seleksi', description: 'Klik untuk bergabung ke grup seleksi Creator', url: 'https://chat.whatsapp.com/GN5f9uK7URH0OZb665xi9Q?s=cl&p=a&mlu=0' },
+    family: { title: 'SCK FAMILY', description: 'Klik untuk bergabung ke grup utama SCK [no seleksi]', url: 'https://chat.whatsapp.com/Fl4UBHHDPpg2DdxpQwHNeK?s=cl&p=a&mlu=0' }
 };
 
 function saveJoinLinks() {
