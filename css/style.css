@@ -1001,26 +1001,16 @@ body.light-theme {
     .page-header h1 { font-size: 1.8rem; }
 }
 
-/* ========== MATIKAN RIPPLE EFFECT DI SEMUA HALAMAN ========== */
-.ripple {
+/* ========== MATIKAN CUSTOM CURSOR ========== */
+.cursor,
+.cursor-follower {
     display: none !important;
-    pointer-events: none !important;
-    opacity: 0 !important;
-    animation: none !important;
 }
 
-/* Matikan efek highlight biru di semua elemen */
-* {
-    -webkit-tap-highlight-color: transparent !important;
-    -webkit-touch-callout: none !important;
+body {
+    cursor: default !important;
 }
 
-/* Hilangin efek active scale biar ga ganggu */
-.btn:active,
-.leader-card:active,
-.tool-card:active,
-.event-card:active,
-.card:active {
-    transform: none !important;
-    transition: none !important;
+a, button, .leader-card, .tool-card, .event-card, .card {
+    cursor: pointer !important;
 }
