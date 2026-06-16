@@ -1,9 +1,9 @@
-// DOM Elements
+// ========== DOM ELEMENTS ==========
 let currentTheme = localStorage.getItem('theme') || 'dark';
 let isMusicPlaying = false;
 let currentVideo = null;
 
-// Initialize on load
+// ========== INITIALIZE ==========
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initDateTime();
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAdminCheck();
 });
 
-// Theme Toggle
+// ========== THEME TOGGLE ==========
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
     if (!themeToggle) return;
@@ -51,7 +51,7 @@ function initTheme() {
     });
 }
 
-// Date & Time
+// ========== DATE & TIME ==========
 function initDateTime() {
     updateDateTime();
     setInterval(updateDateTime, 1000);
@@ -71,7 +71,7 @@ function updateDateTime() {
     }
 }
 
-// Nav Toggle for Mobile
+// ========== NAV TOGGLE ==========
 function initNavToggle() {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
@@ -84,7 +84,7 @@ function initNavToggle() {
     }
 }
 
-// Custom Cursor
+// ========== CUSTOM CURSOR ==========
 function initCustomCursor() {
     const cursor = document.querySelector('.cursor');
     const cursorFollower = document.querySelector('.cursor-follower');
@@ -106,7 +106,7 @@ function initCustomCursor() {
     });
 }
 
-// Music Control
+// ========== MUSIC CONTROL ==========
 function initMusicControl() {
     const musicControl = document.getElementById('musicControl');
     const musicIcon = document.getElementById('musicIcon');
@@ -135,7 +135,7 @@ function initMusicControl() {
     });
 }
 
-// Video Control di Hero
+// ========== VIDEO CONTROL ==========
 function initVideoControl() {
     const heroVideo = document.getElementById('heroVideo');
     const videoPlayBtn = document.getElementById('videoPlayBtn');
@@ -161,7 +161,7 @@ function initVideoControl() {
     });
 }
 
-// Load Stats from localStorage
+// ========== LOAD STATS ==========
 function loadStats() {
     const totalMembers = localStorage.getItem('totalMembers') || '156';
     const totalDivisions = localStorage.getItem('totalDivisions') || '4';
@@ -173,7 +173,7 @@ function loadStats() {
     if (divisionsEl) divisionsEl.textContent = totalDivisions;
 }
 
-// Scroll Reveal Animation
+// ========== SCROLL REVEAL ==========
 function initScrollReveal() {
     const elements = document.querySelectorAll('.card, .leader-card, .tool-card, .event-card');
     
@@ -194,7 +194,7 @@ function initScrollReveal() {
     });
 }
 
-// Greeting based on time
+// ========== GREETING ==========
 function getGreeting() {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) return 'pagi';
@@ -203,21 +203,20 @@ function getGreeting() {
     return 'malam';
 }
 
-// Load Struktur Data
+// ========== LOAD STRUKTUR DATA ==========
 function loadStrukturData() {
     const data = JSON.parse(localStorage.getItem('organizationData')) || {
-        owner: { name: 'Raps', wa: '6281234567890', bio: 'Founder & Creator, pecinta teknologi dan komunitas' },
+        owner: { name: 'NOWAMURA', wa: '6283847663188', bio: 'Founder/Owner, Suka lanang, jadi ati-ati🗿' },
         coOwners: [
-            { name: 'Alex', wa: '6281234567891', bio: 'Co-Founder, ahli strategi' },
-            { name: 'Budi', wa: '6281234567892', bio: 'Co-Founder, kreator konten' }
+            { name: 'FoxxyBziir', wa: '6281997149736', bio: 'Co-Founder/Co-Owner/Developer, Kata mak gw sih, gw ganteng' },
+            { name: 'RoraNdokKodok', wa: '6283872836975', bio: 'Co-Founder/Co-Owner, Sepuh japanese, minusnya agak bisu dikit🗿' }
         ],
         leaders: [
-            { division: 'Divisi Creative', name: 'Citra', wa: '6281234567893', bio: 'Lead Designer, suka desain grafis' },
-            { division: 'Divisi Tech', name: 'Dito', wa: '6281234567894', bio: 'Lead Developer, expert in coding' }
+            { division: 'Divisi 02', name: 'LukaFekfek', wa: '6282318999818', bio: 'Leader Divisi 02, Pecinta Mommy' },
+            { division: 'Divisi 02', name: 'Jemxnxx', wa: '6285157038644', bio: 'Admin Divisi 02, Selir nya nowa yg ke-7' }
         ]
     };
     
-    // Load Owner
     const ownerName = document.getElementById('ownerName');
     const ownerBio = document.getElementById('ownerBio');
     const ownerCard = document.getElementById('ownerCard');
@@ -226,7 +225,6 @@ function loadStrukturData() {
     if (ownerBio) ownerBio.textContent = data.owner.bio;
     if (ownerCard) ownerCard.setAttribute('data-wa', data.owner.wa);
     
-    // Load Co-Owners
     const coOwnersContainer = document.getElementById('coOwnersContainer');
     if (coOwnersContainer) {
         coOwnersContainer.innerHTML = '';
@@ -242,7 +240,6 @@ function loadStrukturData() {
         });
     }
     
-    // Load Leaders
     const leadersContainer = document.getElementById('leadersContainer');
     if (leadersContainer) {
         leadersContainer.innerHTML = '';
@@ -258,7 +255,6 @@ function loadStrukturData() {
         });
     }
     
-    // Add click event to all leader cards for WhatsApp redirect
     document.querySelectorAll('.leader-card').forEach(card => {
         card.addEventListener('click', () => {
             const waNumber = card.getAttribute('data-wa');
@@ -269,14 +265,15 @@ function loadStrukturData() {
     });
 }
 
-// Load Tentang Data
+// ========== LOAD TENTANG DATA ==========
 function loadTentangData() {
     const data = JSON.parse(localStorage.getItem('organizationData')) || {
         divisions: [
-            { name: 'Divisi Creative', members: 25 },
-            { name: 'Divisi Tech', members: 30 },
-            { name: 'Divisi Event', members: 20 },
-            { name: 'Divisi Marketing', members: 15 }
+            { name: 'Total Anggota', members: 106 },
+            { name: 'Total Divisi', AllDivisi: 02 },
+            { name: 'Divisi 01', members : 62 },
+            { name: 'Divisi 02', members: 17 },
+            { name: 'SCK Family', members: 19 }
         ]
     };
     
@@ -303,19 +300,21 @@ function loadTentangData() {
     }
 }
 
-// Load Join Links
+// ========== LOAD JOIN LINKS ==========
 function loadJoinLinks() {
     const links = JSON.parse(localStorage.getItem('joinLinks')) || {
-        seleksi: { title: 'Link Seleksi', description: 'Klik untuk bergabung ke grup seleksi', url: 'https://chat.whatsapp.com/xxxxx' },
-        family: { title: 'SCK FAMILY', description: 'Klik untuk bergabung ke grup utama SCK', url: 'https://chat.whatsapp.com/xxxxx' }
+        seleksi: { title: 'Link Seleksi', description: 'Klik untuk bergabung ke grup seleksi Creator', url: 'https://chat.whatsapp.com/GN5f9uK7URH0OZb665xi9Q?s=cl&p=a&mlu=0' },
+        family: { title: 'SCK FAMILY', description: 'Klik untuk bergabung ke grup umum SCK', url: 'https://chat.whatsapp.com/Fl4UBHHDPpg2DdxpQwHNeK?s=cl&p=a&mlu=0' }
     };
     
     const seleksiCard = document.getElementById('seleksiCard');
     const familyCard = document.getElementById('familyCard');
     
     if (seleksiCard) {
-        seleksiCard.querySelector('h3').textContent = links.seleksi.title;
-        seleksiCard.querySelector('p').textContent = links.seleksi.description;
+        const title = seleksiCard.querySelector('h3');
+        const desc = seleksiCard.querySelector('p');
+        if (title) title.textContent = links.seleksi.title;
+        if (desc) desc.textContent = links.seleksi.description;
         seleksiCard.setAttribute('data-url', links.seleksi.url);
         seleksiCard.addEventListener('click', () => {
             window.open(seleksiCard.getAttribute('data-url'), '_blank');
@@ -323,8 +322,10 @@ function loadJoinLinks() {
     }
     
     if (familyCard) {
-        familyCard.querySelector('h3').textContent = links.family.title;
-        familyCard.querySelector('p').textContent = links.family.description;
+        const title = familyCard.querySelector('h3');
+        const desc = familyCard.querySelector('p');
+        if (title) title.textContent = links.family.title;
+        if (desc) desc.textContent = links.family.description;
         familyCard.setAttribute('data-url', links.family.url);
         familyCard.addEventListener('click', () => {
             window.open(familyCard.getAttribute('data-url'), '_blank');
@@ -332,13 +333,13 @@ function loadJoinLinks() {
     }
 }
 
-// Load Event Data
+// ========== LOAD EVENT DATA ==========
 function loadEventData() {
     const event = JSON.parse(localStorage.getItem('eventData')) || {
         hasEvent: false,
         imageUrl: '',
         description: '',
-        contacts: ['6281234567890', '6281234567891', '6281234567892']
+        contacts: ['6281997149736', '6283847663188', '6283872836975']
     };
     
     const eventContainer = document.getElementById('eventContainer');
@@ -378,25 +379,32 @@ function loadEventData() {
     }
 }
 
-// Load Alat Bantu
+// ========== LOAD ALAT BANTU ==========
 function loadAlatBantu() {
-    const tiktokCard = document.getElementById('tiktokCard');
-    const pinterestCard = document.getElementById('pinterestCard');
+    const cards = {
+        tiktok: document.getElementById('tiktokCard'),
+        pinterest: document.getElementById('pinterestCard'),
+        youtube: document.getElementById('youtubeCard'),
+        instagram: document.getElementById('instagramCard')
+    };
     
-    if (tiktokCard) {
-        tiktokCard.addEventListener('click', () => {
-            window.location.href = 'download-tiktok.html';
-        });
-    }
+    const routes = {
+        tiktok: 'download-tiktok.html',
+        pinterest: 'download-pinterest.html',
+        youtube: 'download-youtube.html',
+        instagram: 'download-instagram.html'
+    };
     
-    if (pinterestCard) {
-        pinterestCard.addEventListener('click', () => {
-            window.location.href = 'download-pinterest.html';
-        });
-    }
+    Object.keys(cards).forEach(key => {
+        if (cards[key]) {
+            cards[key].addEventListener('click', () => {
+                window.location.href = routes[key];
+            });
+        }
+    });
 }
 
-// Check if admin on Set Web page
+// ========== ADMIN CHECK ==========
 function initAdminCheck() {
     const setWebLink = document.querySelector('.set-web-link');
     if (setWebLink) {
@@ -409,58 +417,34 @@ function initAdminCheck() {
     }
 }
 
-// Export functions for global use
-window.getGreeting = getGreeting;
-window.loadStrukturData = loadStrukturData;
-window.loadTentangData = loadTungguData;
-window.loadJoinLinks = loadJoinLinks;
-window.loadEventData = loadEventData;
-window.loadStats = loadStats;
-
-// ========== RIPPLE EFFECT (TOUCHSCREEN) ==========
+// ========== RIPPLE EFFECT (HANYA SAAT KLIK) ==========
 let lastTouchTime = 0;
 let isScrolling = false;
 let scrollTimeout;
 
 document.addEventListener('touchstart', function(e) {
-    // Deteksi apakah ini sentuhan atau scrolling
     const touch = e.touches[0];
     const now = Date.now();
     
-    // Jika jarak waktu antar touch terlalu dekat, skip (biasanya gesture)
-    if (now - lastTouchTime < 50) {
-        return;
-    }
+    if (now - lastTouchTime < 50) return;
     lastTouchTime = now;
     
-    // Tandai bahwa ini adalah tap, bukan scroll
     isScrolling = false;
-    
-    // Buat ripple di posisi sentuhan
     createRipple(touch.clientX, touch.clientY);
 }, { passive: true });
 
-// Deteksi scroll untuk menonaktifkan ripple
 document.addEventListener('touchmove', function(e) {
     isScrolling = true;
-    
-    // Clear timeout sebelumnya
     clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-    }, 300);
+    scrollTimeout = setTimeout(() => { isScrolling = false; }, 300);
 }, { passive: true });
 
-// Mouse click (untuk desktop)
 document.addEventListener('click', function(e) {
-    // Skip jika sedang scrolling
     if (isScrolling) return;
     createRipple(e.clientX, e.clientY);
 });
 
-// Fungsi membuat ripple
 function createRipple(x, y) {
-    // Hapus ripple lama (biar ga numpuk)
     const oldRipples = document.querySelectorAll('.ripple');
     oldRipples.forEach(el => el.remove());
     
@@ -470,19 +454,23 @@ function createRipple(x, y) {
     ripple.style.top = y + 'px';
     document.body.appendChild(ripple);
     
-    // Hapus setelah animasi selesai
-    setTimeout(() => {
-        ripple.remove();
-    }, 700);
+    setTimeout(() => { ripple.remove(); }, 700);
 }
 
-// ========== MATIKAN RIPPLE PADA ELEMEN TERTENTU ==========
-// (tombol, link, card) - biar ga double efek
 document.addEventListener('click', function(e) {
     const target = e.target.closest('a, button, .btn, .leader-card, .tool-card, .event-card, .card');
     if (target) {
-        // Hapus ripple yang dibuat oleh event click global
         const ripples = document.querySelectorAll('.ripple');
         ripples.forEach(el => el.remove());
     }
-}, true); // true = capture phase, biar jalan duluan
+}, true);
+
+// ========== EXPORT GLOBAL ==========
+window.getGreeting = getGreeting;
+window.loadStrukturData = loadStrukturData;
+window.loadTentangData = loadTentangData;
+window.loadJoinLinks = loadJoinLinks;
+window.loadEventData = loadEventData;
+window.loadStats = loadStats;
+window.loadAlatBantu = loadAlatBantu;
+window.initAdminCheck = initAdminCheck;
