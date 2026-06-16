@@ -152,8 +152,9 @@ let organizationData = JSON.parse(localStorage.getItem('organizationData')) || {
         { name: 'Rorandokkodok', wa: '6283872836975', bio: 'Co-Founder/Co-Owner, sefuhh japanese, minus bisu dikit🗿' }
     ],
     leaders: [
+        { division: 'Divisi 01', name: 'XannXXX', wa: '6285393603293', bio: 'Admin Divisi 01, anak pungut node' },
         { division: 'Divisi 02', name: 'LukaFekfek', wa: '6282318999818', bio: 'Leader Div 02, Pecinta Mommy' },
-        { division: 'Divisi 02', name: 'Jemxnxx', wa: '6285157038644', bio: 'Lead Div 02, Babu admin🗿' }
+        { division: 'Divisi 02', name: 'Jemxnxx', wa: '6285157038644', bio: 'Admin Div 02, Babu admin🗿' }
     ],
     divisions: [
         { name: 'Divisi 01', members: 63 },
