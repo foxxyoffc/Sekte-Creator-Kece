@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Only Developer - Sekte Creator Kece</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon" style="display: none;"></i>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://via.placeholder.com/40x40?text=SCK" alt="Logo" class="logo-img">
+                <span>SCK</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="../index.html" class="nav-link">Beranda</a>
+                <a href="struktur.html" class="nav-link">Struktur</a>
+                <a href="tentang.html" class="nav-link">Tentang</a>
+                <a href="join.html" class="nav-link">Join</a>
+                <a href="event.html" class="nav-link">Event</a>
+                <a href="alat-bantu.html" class="nav-link">Alat Bantu</a>
+                <a href="set-web.html" class="nav-link set-web-link">Set Web</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-code"></i> Only Developer</h1>
+        <p>Area khusus pengembang</p>
+    </div>
+
+    <!-- Login Form Developer -->
+    <div id="devLoginForm" class="login-form">
+        <h2><i class="fas fa-lock"></i> Developer Login</h2>
+        <form id="devLogin">
+            <input type="text" id="devUsername" placeholder="Username Developer" required>
+            <input type="password" id="devPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Developer Panel -->
+    <div id="devPanel" class="admin-panel" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+            <h2>Developer Panel</h2>
+            <div>
+                <span id="greetingMsg" style="color: var(--neon-blue); margin-right: 15px;"></span>
+                <button id="devLogoutBtn" class="btn btn-secondary" style="padding: 8px 20px;">Logout</button>
+            </div>
+        </div>
+
+        <!-- Set Profile & Hero Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-image"></i> Set Profile & Hero</h3>
+            <div class="setting-item">
+                <label>Foto Profil Organisasi (URL):</label>
+                <input type="text" id="profileImageUrl" placeholder="https://example.com/logo.jpg">
+            </div>
+            <div class="setting-item">
+                <label>Video Hero (URL):</label>
+                <input type="text" id="heroVideoUrl" placeholder="https://example.com/video.mp4">
+            </div>
+            <button id="saveProfileBtn" class="add-btn">Simpan Profile</button>
+        </div>
+
+        <!-- Set Owner & Co-Owner Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-crown"></i> Set Owner & Co-Owner</h3>
+            <div class="setting-item">
+                <label>Nama Owner:</label>
+                <input type="text" id="ownerName" placeholder="Nama Owner">
+            </div>
+            <div class="setting-item">
+                <label>WhatsApp Owner:</label>
+                <input type="text" id="ownerWa" placeholder="6281234567890">
+            </div>
+            <div class="setting-item">
+                <label>Bio Owner:</label>
+                <textarea id="ownerBio" rows="2" placeholder="Bio Owner..."></textarea>
+            </div>
+            <hr style="margin: 15px 0; border-color: var(--glass-border);">
+            <h4>Co-Owner</h4>
+            <div id="coOwnersList"></div>
+            <button id="addCoOwnerBtn" class="add-btn" style="margin-top: 10px;"><i class="fas fa-plus"></i> + Tambah Co-Owner</button>
+        </div>
+
+        <!-- Set Leader Divisi Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-chalkboard-user"></i> Set Leader Divisi</h3>
+            <div id="leadersList"></div>
+            <button id="addLeaderBtn" class="add-btn" style="margin-top: 10px;"><i class="fas fa-plus"></i> + Tambah Leader Divisi</button>
+        </div>
+
+        <!-- Set Divisi Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-layer-group"></i> Set Divisi</h3>
+            <div id="divisionsList"></div>
+            <button id="addDivisionDevBtn" class="add-btn" style="margin-top: 10px;"><i class="fas fa-plus"></i> + Tambah Divisi</button>
+        </div>
+
+        <!-- Set Akun Developer Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-user-secret"></i> Set Akun Developer</h3>
+            <div id="devAccountsList"></div>
+            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="newDevUsername" placeholder="Username baru" style="flex: 1;">
+                <input type="password" id="newDevPassword" placeholder="Password" style="flex: 1;">
+                <button id="addDevBtn" class="add-btn">+ Tambah Developer</button>
+            </div>
+        </div>
+
+        <!-- Set Akun Admin (from dev) -->
+        <div class="admin-section">
+            <h3><i class="fas fa-user-shield"></i> Kelola Akun Admin</h3>
+            <div id="adminAccountsListDev"></div>
+            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="newAdminUsernameDev" placeholder="Username admin" style="flex: 1;">
+                <input type="password" id="newAdminPasswordDev" placeholder="Password" style="flex: 1;">
+                <select id="newAdminRoleDev" style="padding: 10px;">
+                    <option value="admin">Admin</option>
+                    <option value="moderator">Moderator</option>
+                </select>
+                <button id="addAdminDevBtn" class="add-btn">+ Tambah Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://via.placeholder.com/50x50?text=SCK" alt="Logo">
+                    <h3>Sekte Creator Kece</h3>
+                    <p>Official Organization</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <a href="../index.html">Beranda</a>
+                    <a href="struktur.html">Struktur</a>
+                    <a href="tentang.html">Tentang</a>
+                    <a href="join.html">Join</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Developer</h4>
+                    <a href="https://wa.me/6281234567890" class="contact-wa">
+                        <i class="fab fa-whatsapp"></i> +62 812-3456-7890
+                    </a>
+                    <a href="only-developer.html" class="dev-link">
+                        <i class="fas fa-lock"></i> Only Developer
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sekte Creator Kece. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Check login status
+        function checkDevLoginStatus() {
+            if (isDevLoggedIn()) {
+                document.getElementById('devLoginForm').style.display = 'none';
+                document.getElementById('devPanel').style.display = 'block';
+                loadDeveloperData();
+                updateGreeting();
+            } else {
+                document.getElementById('devLoginForm').style.display = 'block';
+                document.getElementById('devPanel').style.display = 'none';
+            }
+        }
+
+        function updateGreeting() {
+            const greeting = getGreeting();
+            document.getElementById('greetingMsg').innerHTML = `Halo Developer, selamat ${greeting}, Semoga Harimu Menyenangkan!`;
+        }
+
+        function loadDeveloperData() {
+            const orgData = organizationData;
+            
+            // Load profile
+            document.getElementById('profileImageUrl').value = orgData.profileImage || '';
+            document.getElementById('heroVideoUrl').value = orgData.heroVideoUrl || '';
+            
+            // Load owner
+            document.getElementById('ownerName').value = orgData.owner.name;
+            document.getElementById('ownerWa').value = orgData.owner.wa;
+            document.getElementById('ownerBio').value = orgData.owner.bio;
+            
+            // Load co-owners
+            loadCoOwnersList();
+            
+            // Load leaders
+            loadLeadersList();
+            
+            // Load divisions
+            loadDivisionsListDev();
+            
+            // Load developer accounts
+            loadDevAccounts();
+            
+            // Load admin accounts
+            loadAdminAccountsDev();
+        }
+        
+        function loadCoOwnersList() {
+            const container = document.getElementById('coOwnersList');
+            container.innerHTML = '';
+            organizationData.coOwners.forEach((co, index) => {
+                container.innerHTML += `
+                    <div class="setting-item" style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 10px;">
+                        <label>Nama Co-Owner ${index + 1}:</label>
+                        <input type="text" id="coName_${index}" value="${co.name}" style="margin-bottom: 5px;">
+                        <label>WhatsApp:</label>
+                        <input type="text" id="coWa_${index}" value="${co.wa}" style="margin-bottom: 5px;">
+                        <label>Bio:</label>
+                        <input type="text" id="coBio_${index}" value="${co.bio}" style="margin-bottom: 5px;">
+                        <button class="remove-co-btn" data-index="${index}" style="background: rgba(255,0,0,0.2); border: none; color: red; padding: 5px 10px; border-radius: 10px; cursor: pointer;">Hapus Co-Owner</button>
+                    </div>
+                `;
+            });
+            
+            document.querySelectorAll('.remove-co-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    if (confirm('Hapus co-owner ini?')) {
+                        removeCoOwner(index);
+                        loadCoOwnersList();
+                    }
+                });
+            });
+            
+            organizationData.coOwners.forEach((_, index) => {
+                const nameInput = document.getElementById(`coName_${index}`);
+                const waInput = document.getElementById(`coWa_${index}`);
+                const bioInput = document.getElementById(`coBio_${index}`);
+                if (nameInput) nameInput.addEventListener('change', () => updateCoOwner(index, nameInput.value, waInput.value, bioInput.value));
+                if (waInput) waInput.addEventListener('change', () => updateCoOwner(index, nameInput.value, waInput.value, bioInput.value));
+                if (bioInput) bioInput.addEventListener('change', () => updateCoOwner(index, nameInput.value, waInput.value, bioInput.value));
+            });
+        }
+        
+        function loadLeadersList() {
+            const container = document.getElementById('leadersList');
+            container.innerHTML = '';
+            organizationData.leaders.forEach((leader, index) => {
+                container.innerHTML += `
+                    <div class="setting-item" style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 10px;">
+                        <label>Nama Leader:</label>
+                        <input type="text" id="leaderName_${index}" value="${leader.name}" style="margin-bottom: 5px;">
+                        <label>Divisi:</label>
+                        <input type="text" id="leaderDiv_${index}" value="${leader.division}" style="margin-bottom: 5px;">
+                        <label>WhatsApp:</label>
+                        <input type="text" id="leaderWa_${index}" value="${leader.wa}" style="margin-bottom: 5px;">
+                        <label>Bio:</label>
+                        <input type="text" id="leaderBio_${index}" value="${leader.bio}" style="margin-bottom: 5px;">
+                        <button class="remove-leader-btn" data-index="${index}" style="background: rgba(255,0,0,0.2); border: none; color: red; padding: 5px 10px; border-radius: 10px; cursor: pointer;">Hapus Leader</button>
+                    </div>
+                `;
+            });
+            
+            document.querySelectorAll('.remove-leader-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    if (confirm('Hapus leader ini?')) {
+                        removeLeader(index);
+                        loadLeadersList();
+                    }
+                });
+            });
+            
+            organizationData.leaders.forEach((_, index) => {
+                const nameInput = document.getElementById(`leaderName_${index}`);
+                const divInput = document.getElementById(`leaderDiv_${index}`);
+                const waInput = document.getElementById(`leaderWa_${index}`);
+                const bioInput = document.getElementById(`leaderBio_${index}`);
+                if (nameInput) nameInput.addEventListener('change', () => updateLeader(index, divInput.value, nameInput.value, waInput.value, bioInput.value));
+                if (divInput) divInput.addEventListener('change', () => updateLeader(index, divInput.value, nameInput.value, waInput.value, bioInput.value));
+                if (waInput) waInput.addEventListener('change', () => updateLeader(index, divInput.value, nameInput.value, waInput.value, bioInput.value));
+                if (bioInput) bioInput.addEventListener('change', () => updateLeader(index, divInput.value, nameInput.value, waInput.value, bioInput.value));
+            });
+        }
+        
+        function loadDivisionsListDev() {
+            const container = document.getElementById('divisionsList');
+            container.innerHTML = '';
+            organizationData.divisions.forEach((div, index) => {
+                container.innerHTML += `
+                    <div class="setting-item" style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 10px;">
+                        <label>Nama Divisi:</label>
+                        <input type="text" id="divNameDev_${index}" value="${div.name}" style="margin-bottom: 5px;">
+                        <label>Jumlah Anggota:</label>
+                        <input type="number" id="divMembersDev_${index}" value="${div.members}">
+                        <button class="remove-div-dev-btn" data-index="${index}" style="background: rgba(255,0,0,0.2); border: none; color: red; padding: 5px 10px; border-radius: 10px; cursor: pointer; margin-top: 10px;">Hapus Divisi</button>
+                    </div>
+                `;
+            });
+            
+            document.querySelectorAll('.remove-div-dev-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    if (confirm('Hapus divisi ini?')) {
+                        removeDivision(index);
+                        loadDivisionsListDev();
+                    }
+                });
+            });
+            
+            organizationData.divisions.forEach((_, index) => {
+                const nameInput = document.getElementById(`divNameDev_${index}`);
+                const membersInput = document.getElementById(`divMembersDev_${index}`);
+                if (nameInput) nameInput.addEventListener('change', () => updateDivisionName(index, nameInput.value));
+                if (membersInput) membersInput.addEventListener('change', () => updateDivisionMembers(index, parseInt(membersInput.value) || 0));
+            });
+        }
+        
+        function loadDevAccounts() {
+            const container = document.getElementById('devAccountsList');
+            const devCreds = JSON.parse(localStorage.getItem('devCredentials')) || devCredentials;
+            container.innerHTML = '<h4>Daftar Akun Developer:</h4>';
+            devCreds.forEach((acc, index) => {
+                container.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid var(--glass-border);">
+                        <span><strong>${acc.username}</strong></span>
+                        <button class="remove-dev-btn" data-username="${acc.username}" style="background: rgba(255,0,0,0.2); border: none; color: red; padding: 5px 10px; border-radius: 10px; cursor: pointer;">Hapus</button>
+                    </div>
+                `;
+            });
+            
+            document.querySelectorAll('.remove-dev-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const username = btn.dataset.username;
+                    if (confirm(`Hapus akun developer ${username}?`)) {
+                        removeDevUser(username);
+                        loadDevAccounts();
+                    }
+                });
+            });
+        }
+        
+        function loadAdminAccountsDev() {
+            const container = document.getElementById('adminAccountsListDev');
+            const adminCreds = JSON.parse(localStorage.getItem('adminCredentials')) || validCredentials;
+            container.innerHTML = '<h4>Daftar Akun Admin:</h4>';
+            adminCreds.forEach((acc, index) => {
+                container.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid var(--glass-border);">
+                        <span><strong>${acc.username}</strong> (${acc.role})</span>
+                        <button class="remove-admin-dev-btn" data-username="${acc.username}" style="background: rgba(255,0,0,0.2); border: none; color: red; padding: 5px 10px; border-radius: 10px; cursor: pointer;">Hapus</button>
+                    </div>
+                `;
+            });
+            
+            document.querySelectorAll('.remove-admin-dev-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const username = btn.dataset.username;
+                    if (confirm(`Hapus akun admin ${username}?`)) {
+                        removeAdminUser(username);
+                        loadAdminAccountsDev();
+                    }
+                });
+            });
+        }
+        
+        // Save profile
+        document.getElementById('saveProfileBtn')?.addEventListener('click', () => {
+            const profileImage = document.getElementById('profileImageUrl').value;
+            const heroVideo = document.getElementById('heroVideoUrl').value;
+            updateProfileImage(profileImage);
+            updateHeroVideo(heroVideo);
+            alert('Profile berhasil disimpan!');
+        });
+        
+        // Add co-owner
+        document.getElementById('addCoOwnerBtn')?.addEventListener('click', () => {
+            const name = prompt('Nama Co-Owner:');
+            const wa = prompt('Nomor WhatsApp (628xxxx):');
+            const bio = prompt('Bio singkat:');
+            if (name && wa) {
+                addCoOwner(name, wa, bio || '');
+                loadCoOwnersList();
+            }
+        });
+        
+        // Add leader
+        document.getElementById('addLeaderBtn')?.addEventListener('click', () => {
+            const name = prompt('Nama Leader:');
+            const division = prompt('Nama Divisi:');
+            const wa = prompt('Nomor WhatsApp (628xxxx):');
+            const bio = prompt('Bio singkat:');
+            if (name && division && wa) {
+                addLeader(division, name, wa, bio || '');
+                loadLeadersList();
+            }
+        });
+        
+        // Add division
+        document.getElementById('addDivisionDevBtn')?.addEventListener('click', () => {
+            const name = prompt('Nama Divisi baru:');
+            if (name) {
+                addDivision(name, 0);
+                loadDivisionsListDev();
+            }
+        });
+        
+        // Add developer account
+        document.getElementById('addDevBtn')?.addEventListener('click', () => {
+            const username = document.getElementById('newDevUsername').value;
+            const password = document.getElementById('newDevPassword').value;
+            if (username && password) {
+                if (addDevUser(username, password)) {
+                    alert('Developer berhasil ditambahkan!');
+                    document.getElementById('newDevUsername').value = '';
+                    document.getElementById('newDevPassword').value = '';
+                    loadDevAccounts();
+                } else {
+                    alert('Username sudah ada!');
+                }
+            } else {
+                alert('Isi username dan password!');
+            }
+        });
+        
+        // Add admin from dev panel
+        document.getElementById('addAdminDevBtn')?.addEventListener('click', () => {
+            const username = document.getElementById('newAdminUsernameDev').value;
+            const password = document.getElementById('newAdminPasswordDev').value;
+            const role = document.getElementById('newAdminRoleDev').value;
+            if (username && password) {
+                if (addAdminUser(username, password, role)) {
+                    alert('Admin berhasil ditambahkan!');
+                    document.getElementById('newAdminUsernameDev').value = '';
+                    document.getElementById('newAdminPasswordDev').value = '';
+                    loadAdminAccountsDev();
+                } else {
+                    alert('Username sudah ada!');
+                }
+            } else {
+                alert('Isi username dan password!');
+            }
+        });
+        
+        // Update owner on change
+        document.getElementById('ownerName')?.addEventListener('change', () => {
+            updateOwner(
+                document.getElementById('ownerName').value,
+                document.getElementById('ownerWa').value,
+                document.getElementById('ownerBio').value
+            );
+        });
+        document.getElementById('ownerWa')?.addEventListener('change', () => {
+            updateOwner(
+                document.getElementById('ownerName').value,
+                document.getElementById('ownerWa').value,
+                document.getElementById('ownerBio').value
+            );
+        });
+        document.getElementById('ownerBio')?.addEventListener('change', () => {
+            updateOwner(
+                document.getElementById('ownerName').value,
+                document.getElementById('ownerWa').value,
+                document.getElementById('ownerBio').value
+            );
+        });
+        
+        // Logout
+        document.getElementById('devLogoutBtn')?.addEventListener('click', () => {
+            logout();
+        });
+        
+        // Login form submit
+        document.getElementById('devLogin')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('devUsername').value;
+            const password = document.getElementById('devPassword').value;
+            if (loginDeveloper(username, password)) {
+                checkDevLoginStatus();
+                alert('Login berhasil!');
+            } else {
+                alert('Username atau password salah!');
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            checkDevLoginStatus();
+        });
+    </script>
+</body>
+</html>
