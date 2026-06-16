@@ -212,6 +212,7 @@ function loadStrukturData() {
             { name: 'RoraNdokKodok', wa: '6283872836975', bio: 'Co-Founder/Co-Owner, Sepuh japanese, minusnya agak bisu dikit🗿' }
         ],
         leaders: [
+            { division: 'Divisi 01', name: 'XannXXX', wa: '6285393603293', bio: 'Admin Divisi 01, Anak Pungut Node' },
             { division: 'Divisi 02', name: 'LukaFekfek', wa: '6282318999818', bio: 'Leader Divisi 02, Pecinta Mommy' },
             { division: 'Divisi 02', name: 'Jemxnxx', wa: '6285157038644', bio: 'Admin Divisi 02, Selir nya nowa yg ke-7' }
         ]
