@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .ripple { display: none !important; }
+        .cursor, .cursor-follower { display: none !important; }
+        body { cursor: default !important; }
+    </style>
 </head>
 <body>
 
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+    <!-- HAPUS INI: <div class="cursor"></div> -->
+    <!-- HAPUS INI: <div class="cursor-follower"></div> -->
 
     <div class="theme-toggle" id="themeToggle">
         <i class="fas fa-sun"></i>
@@ -21,15 +26,15 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src= "https://c.top4top.io/p_3819ed0vz1.jpg" alt="Logo" class="logo-img">
+                <img src="https://c.top4top.io/p_3819ed0vz1.jpg" alt="Logo" class="logo-img">
                 <span>SCK</span>
             </div>
             <div class="nav-menu" id="navMenu">
                 <a href="../index.html" class="nav-link">Beranda</a>
-                <a href="struktur.html" class="nav-link">Struktur</a>
-                <a href="tentang.html" class="nav-link">Tentang</a>
-                <a href="join.html" class="nav-link">Join</a>
-                <a href="event.html" class="nav-link">Event</a>
+                <a href="struktur.html" class="nav-link">Struktur SCK</a>
+                <a href="tentang.html" class="nav-link">Tentang SCK</a>
+                <a href="join.html" class="nav-link">Join SCK</a>
+                <a href="event.html" class="nav-link">Event SCK</a>
                 <a href="alat-bantu.html" class="nav-link">Alat Bantu</a>
                 <a href="set-web.html" class="nav-link">Set Web</a>
             </div>
@@ -88,9 +93,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
             initNavToggle();
-            initCustomCursor();
             
-            // Check if already logged in
+            // Cek apakah udah login, langsung redirect ke set-web
             if (isAdminLoggedIn() || isDevLoggedIn()) {
                 window.location.href = 'set-web.html';
             }
