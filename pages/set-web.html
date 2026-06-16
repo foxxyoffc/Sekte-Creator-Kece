@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Matikan ripple & custom cursor di halaman ini */
         .ripple { display: none !important; }
         .cursor, .cursor-follower { display: none !important; }
         body { cursor: default !important; }
@@ -24,7 +23,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="https://j.top4top.io/p_38195t90r1.jpg" alt="Logo" class="logo-img">
+                <img src="https://c.top4top.io/p_3819ed0vz1.jpg" alt="Logo" class="logo-img">
                 <span>SCK</span>
             </div>
             <div class="nav-menu" id="navMenu">
@@ -161,7 +160,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="https://j.top4top.io/p_38195t90r1.jpg" alt="Logo">
+                    <img src="https://c.top4top.io/p_3819ed0vz1.jpg" alt="Logo">
                     <h3>Sekte Creator Kece</h3>
                     <p>Official Sekte</p>
                 </div>
@@ -191,36 +190,31 @@
     <script src="../js/main.js"></script>
     <script src="../js/auth.js"></script>
     <script>
-        // ========== FUNCTION CEK LOGIN ==========
         function checkLoginStatus() {
             if (isAdminLoggedIn() || isDevLoggedIn()) {
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
                 loadAdminData();
             } else {
-                document.getElementById('loginForm').style.display = 'block';
-                document.getElementById('adminPanel').style.display = 'none';
+                // Redirect ke login.html kalo belum login
+                window.location.href = 'login.html';
             }
         }
 
         function loadAdminData() {
             const orgData = organizationData;
             
-            // Event
             const event = eventData;
             document.getElementById('eventImageUrl').value = event.imageUrl || '';
             document.getElementById('eventDescription').value = event.description || '';
             document.getElementById('eventStatus').value = event.hasEvent ? 'true' : 'false';
             document.getElementById('eventContacts').value = event.contacts.join(',');
             
-            // Stats
             document.getElementById('setTotalMembers').value = getTotalMembers();
             document.getElementById('setTotalDivisions').value = getTotalDivisions();
             
-            // Divisions
             loadDivisionsList();
             
-            // Join Links
             const links = joinLinks;
             document.getElementById('seleksiTitle').value = links.seleksi.title;
             document.getElementById('seleksiDesc').value = links.seleksi.description;
@@ -229,7 +223,6 @@
             document.getElementById('familyDesc').value = links.family.description;
             document.getElementById('familyUrl').value = links.family.url;
             
-            // Admin Accounts
             loadAdminAccounts();
         }
         
@@ -296,7 +289,6 @@
             });
         }
         
-        // ========== SAVE FUNCTIONS ==========
         document.getElementById('saveEventBtn')?.addEventListener('click', () => {
             const hasEvent = document.getElementById('eventStatus').value === 'true';
             const imageUrl = document.getElementById('eventImageUrl').value;
