@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Tentang Organisasi - Sekte Creator Kece</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon" style="display: none;"></i>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://via.placeholder.com/40x40?text=SCK" alt="Logo" class="logo-img">
+                <span>SCK</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="../index.html" class="nav-link">Beranda</a>
+                <a href="struktur.html" class="nav-link">Struktur</a>
+                <a href="tentang.html" class="nav-link active">Tentang</a>
+                <a href="join.html" class="nav-link">Join</a>
+                <a href="event.html" class="nav-link">Event</a>
+                <a href="alat-bantu.html" class="nav-link">Alat Bantu</a>
+                <a href="set-web.html" class="nav-link set-web-link">Set Web</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-info-circle"></i> Tentang Organisasi</h1>
+        <p>Mengenal lebih dekat Sekte Creator Kece</p>
+    </div>
+
+    <div class="container" style="padding: 0 20px;">
+        <!-- Profile Section -->
+        <div class="about-profile" style="text-align: center; margin-bottom: 50px;">
+            <div class="profile-image" style="width: 180px; height: 180px; margin: 0 auto 20px;">
+                <img src="https://via.placeholder.com/180x180?text=SCK" alt="Sekte Creator Kece" id="aboutProfileImage">
+            </div>
+            <h2 style="color: var(--neon-blue); margin-bottom: 15px;">Sekte Creator Kece (SCK)</h2>
+            <p style="max-width: 700px; margin: 0 auto; color: var(--text-secondary);">
+                Sekte Creator Kece adalah komunitas kreator konten yang bergerak di bidang desain grafis, pengembangan teknologi, 
+                event organizer, dan marketing digital. Kami berdedikasi untuk menciptakan ekosistem kreatif yang positif dan produktif.
+            </p>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="about-stats" style="display: flex; justify-content: center; gap: 50px; margin-bottom: 50px; flex-wrap: wrap;">
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <span id="totalAnggotaTentang">0</span>
+                <p>Total Anggota</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-layer-group"></i>
+                <span id="totalDivisiTentang">0</span>
+                <p>Total Divisi</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>2024</span>
+                <p>Tahun Berdiri</p>
+            </div>
+        </div>
+
+        <!-- Divisions Section -->
+        <div class="about-divisions">
+            <h2 style="text-align: center; margin-bottom: 30px; color: var(--neon-blue);">
+                <i class="fas fa-layer-group"></i> Struktur Divisi
+            </h2>
+            <div class="grid-2" id="divisiList">
+                <!-- Dynamic content from JS -->
+            </div>
+        </div>
+
+        <!-- Vision & Mission -->
+        <div class="about-vm" style="margin: 50px 0;">
+            <div class="grid-2">
+                <div class="card">
+                    <h3><i class="fas fa-eye"></i> Visi</h3>
+                    <p>Menjadi komunitas kreator terdepan di Indonesia yang melahirkan karya-karya inovatif dan berdampak positif bagi masyarakat.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-bullseye"></i> Misi</h3>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>Mengembangkan bakat dan potensi anggota</li>
+                        <li>Menciptakan kolaborasi antar kreator</li>
+                        <li>Menghasilkan karya berkualitas</li>
+                        <li>Membangun jaringan profesional</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://via.placeholder.com/50x50?text=SCK" alt="Logo">
+                    <h3>Sekte Creator Kece</h3>
+                    <p>Official Organization</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <a href="../index.html">Beranda</a>
+                    <a href="struktur.html">Struktur</a>
+                    <a href="tentang.html">Tentang</a>
+                    <a href="join.html">Join</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Developer</h4>
+                    <a href="https://wa.me/6281234567890" class="contact-wa">
+                        <i class="fab fa-whatsapp"></i> +62 812-3456-7890
+                    </a>
+                    <a href="only-developer.html" class="dev-link">
+                        <i class="fas fa-lock"></i> Only Developer
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sekte Creator Kece. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTentangData();
+            
+            // Load profile image from localStorage
+            const orgData = JSON.parse(localStorage.getItem('organizationData')) || {};
+            const aboutImg = document.getElementById('aboutProfileImage');
+            if (aboutImg && orgData.profileImage) {
+                aboutImg.src = orgData.profileImage;
+            }
+        });
+    </script>
+</body>
+</html>
