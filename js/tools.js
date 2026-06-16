@@ -51,59 +51,7 @@ async function downloadTikTok() {
     }
 }
 
-// ========== PINTEREST DOWNLOADER (PAKE PIN DOWN & KLICKPIN) ==========
-async function downloadPinterest() {
-    const urlInput = document.getElementById('pinterestUrl');
-    const resultDiv = document.getElementById('pinterestResult');
-    const url = urlInput.value.trim();
-    
-    if (!url) {
-        alert('Masukkan URL Pinterest terlebih dahulu!');
-        return;
-    }
-    
-    resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses...</div>';
-    
-    try {
-        // Coba pake API PinDown.io dulu
-        let response = await fetch(`https://pindown.io/api/download?url=${encodeURIComponent(url)}`);
-        let data = await response.json();
-        
-        // Kalo gagal, coba KlickPin
-        if (!data.success && !data.url) {
-            response = await fetch(`https://klickpin.com/api/download?url=${encodeURIComponent(url)}`);
-            data = await response.json();
-        }
-        
-        // Kalo berhasil
-        if (data.success && data.media_url) {
-            const mediaUrl = data.media_url;
-            const isVideo = mediaUrl.includes('.mp4') || mediaUrl.includes('.mov');
-            const title = data.title || 'Pinterest Media';
-            
-            if (isVideo) {
-                resultDiv.innerHTML = `
-                    <div class="video-preview">
-                        <video src="${mediaUrl}" controls></video>
-                        <div class="video-info">
-                            <p><strong><i class="fab fa-pinterest"></i> Judul:</strong> ${title}</p>
-                            <a href="${mediaUrl}" download class="download-link"><i class="fas fa-download"></i> Download Video</a>
-                        </div>
-                    </div>
-                `;
-            } else {
-                resultDiv.innerHTML = `
-                    <div class="video-preview">
-                        <img src="${mediaUrl}" style="width: 100%; border-radius: 15px;" alt="Pinterest Image">
-                        <div class="video-info">
-                            <p><strong><i class="fab fa-pinterest"></i> Judul:</strong> ${title}</p>
-                            <a href="${mediaUrl}" download class="download-link"><i class="fas fa-download"></i> Download Gambar</a>
-                        </div>
-                    </div>
-                `;
-            }
-        } else {
-            // Tampilkan opsi manual pake PinDown.io & KlickPin (PAKAI ID UNIK)
+ opsi manual pake PinDown.io & KlickPin (PAKAI ID UNIK)
             resultDiv.innerHTML = `
                 <div class="video-preview">
                     <div class="alert alert-info" style="margin-bottom: 15px;">
@@ -138,6 +86,144 @@ async function downloadPinterest() {
             <div class="video-preview">
                 <div class="alert alert-info" style="margin-bottom: 15px;">
                     <i class="fas fa-exclamation-triangle"></i> Terjadi kesalahan. Gunakan opsi di bawah ini:
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <input type="text" id="pinterestManualUrl" value="${url}" readonly style="flex: 1; padding: 10px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px; color: var(--text-primary);">
+                        <button onclick="copyPinterestUrl()" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue); padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;">
+                            <i class="fas fa-copy"></i> Salin Link
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                        <a href="https://pindown.io/id1" target="_blank" class="download-link" style="background: var(--neon-blue); color: var(--dark-bg); text-decoration: none; padding: 10px 20px; border-radius: 10px; display: inline-block;">
+                            <i class="fas fa-external-link-alt"></i> Buka PinDown.io
+                        </a>
+                        <a href="https://klickpin.com/id/" target="_blank" class="download-link" style="background: var(--neon-blue); color: var(--dark-bg); text-decoration: none; padding: 10px 20px; border-radius: 10px; display: inline-block;">
+                            <i class="fas fa-external-link-alt"></i> Buka KlickPin
+                        </a>
+                        <a href="${url}" target="_blank" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue); text-decoration: none; padding: 10px 20px; border-radius: 10px; display: inline-block;">
+                            <i class="fas fa-external-link-alt"></i> Buka di Pinterest
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// ========== PINTEREST DOWNLOADER (PAKE API BOTCAHX) ==========
+async function downloadPinterest() {
+    const urlInput = document.getElementById('pinterestUrl');
+    const resultDiv = document.getElementById('pinterestResult');
+    const url = urlInput.value.trim();
+    
+    if (!url) {
+        alert('Masukkan URL Pinterest terlebih dahulu!');
+        return;
+    }
+    
+    // Cek format URL
+    if (!url.match(/pinterest\.com|pin\.it/i)) {
+        alert('❌ URL bukan dari Pinterest!');
+        return;
+    }
+    
+    resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses...</div>';
+    
+    try {
+        // Pake API BotCahx
+        const encodedUrl = encodeURIComponent(url);
+        const apiUrl = `https://api.botcahx.eu.org/api/download/pinterest?apikey=alipaiapikeybaru&url=${encodedUrl}`;
+        
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        if (data && data.result && data.result.data) {
+            const media = data.result.data;
+            const isVideo = media.video || media.url?.includes('.mp4');
+            
+            if (media.video) {
+                resultDiv.innerHTML = `
+                    <div class="video-preview">
+                        <video src="${media.video}" controls></video>
+                        <div class="video-info">
+                            <p><strong><i class="fab fa-pinterest"></i> Judul:</strong> ${media.title || 'Pinterest Video'}</p>
+                            <a href="${media.video}" download class="download-link"><i class="fas fa-download"></i> Download Video</a>
+                        </div>
+                    </div>
+                `;
+            } else if (media.image) {
+                resultDiv.innerHTML = `
+                    <div class="video-preview">
+                        <img src="${media.image}" style="width: 100%; border-radius: 15px;" alt="Pinterest Image">
+                        <div class="video-info">
+                            <p><strong><i class="fab fa-pinterest"></i> Judul:</strong> ${media.title || 'Pinterest Image'}</p>
+                            <a href="${media.image}" download class="download-link"><i class="fas fa-download"></i> Download Gambar</a>
+                        </div>
+                    </div>
+                `;
+            } else if (media.url) {
+                // Fallback: kalo ada url langsung
+                resultDiv.innerHTML = `
+                    <div class="video-preview">
+                        <video src="${media.url}" controls></video>
+                        <div class="video-info">
+                            <p><strong><i class="fab fa-pinterest"></i> Judul:</strong> ${media.title || 'Pinterest Media'}</p>
+                            <a href="${media.url}" download class="download-link"><i class="fas fa-download"></i> Download</a>
+                        </div>
+                    </div>
+                `;
+            } else {
+                throw new Error('Media tidak ditemukan');
+            }
+            
+            // Tambah tombol alternatif
+            resultDiv.innerHTML += `
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; justify-content: center;">
+                    <a href="https://pindown.io/id1" target="_blank" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue); text-decoration: none; padding: 10px 20px; border-radius: 10px; display: inline-block;">
+                        <i class="fas fa-external-link-alt"></i> Alternative: PinDown.io
+                    </a>
+                    <a href="https://klickpin.com/id/" target="_blank" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue); text-decoration: none; padding: 10px 20px; border-radius: 10px; display: inline-block;">
+                        <i class="fas fa-external-link-alt"></i> Alternative: KlickPin
+                    </a>
+                </div>
+            `;
+            
+        } else {
+            // Kalo API gagal, tampilkan opsi manual
+            resultDiv.innerHTML = `
+                <div class="video-preview">
+                    <div class="alert alert-info" style="margin-bottom: 15px;">
+                        <i class="fas fa-exclamation-triangle"></i> Gagal memproses via API. Gunakan opsi di bawah:
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <input type="text" id="pinterestManualUrl" value="${url}" readonly style="flex: 1; padding: 10px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px; color: var(--text-primary);">
+                            <button onclick="copyPinterestUrl()" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue); padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;">
+                                <i class="fas fa-copy"></i> Salin Link
+                            </button>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                            <a href="https://pindown.io/id1" target="_blank" class="download-link" style="background: var(--neon-blue); color: var(--dark-bg); text-decoration: none; padding: 10px 20px; border-radius: 10px; display: inline-block;">
+                                <i class="fas fa-external-link-alt"></i> Buka PinDown.io
+                            </a>
+                            <a href="https://klickpin.com/id/" target="_blank" class="download-link" style="background: var(--neon-blue); color: var(--dark-bg); text-decoration: none; padding: 10px 20px; border-radius: 10px; display: inline-block;">
+                                <i class="fas fa-external-link-alt"></i> Buka KlickPin
+                            </a>
+                            <a href="${url}" target="_blank" class="download-link" style="background: var(--glass-bg); color: var(--neon-blue); text-decoration: none; padding: 10px 20px; border-radius: 10px; display: inline-block;">
+                                <i class="fas fa-external-link-alt"></i> Buka di Pinterest
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('Pinterest Download Error:', error);
+        resultDiv.innerHTML = `
+            <div class="video-preview">
+                <div class="alert alert-info" style="margin-bottom: 15px;">
+                    <i class="fas fa-exclamation-triangle"></i> Terjadi kesalahan: ${error.message}
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 10px;">
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
