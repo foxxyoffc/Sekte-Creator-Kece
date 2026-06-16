@@ -7,13 +7,11 @@
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .ripple { display: none !important; }
-        .cursor, .cursor-follower { display: none !important; }
-        body { cursor: default !important; }
-    </style>
 </head>
 <body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
     <div class="theme-toggle" id="themeToggle">
         <i class="fas fa-sun"></i>
@@ -23,17 +21,17 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="https://c.top4top.io/p_3819ed0vz1.jpg" alt="Logo" class="logo-img">
+                <img src="https://j.top4top.io/p_38195t90r1.jpg" alt="Logo" class="logo-img">
                 <span>SCK</span>
             </div>
             <div class="nav-menu" id="navMenu">
-                <a href="../index.html" target="_parent" class="nav-link">Beranda</a>
-                <a href="struktur.html" target="_parent" class="nav-link">Struktur SCK</a>
-                <a href="tentang.html" target="_parent" class="nav-link">Tentang SCK</a>
-                <a href="join.html" target="_parent" class="nav-link">Join SCK</a>
-                <a href="event.html" target="_parent" class="nav-link">Event SCK</a>
-                <a href="alat-bantu.html" target="_parent" class="nav-link">Alat Bantu</a>
-                <a href="set-web.html" target="_parent" class="nav-link active set-web-link">Set Web</a>
+                <a href="../index.html" class="nav-link">Beranda</a>
+                <a href="struktur.html" class="nav-link">Struktur SCK</a>
+                <a href="tentang.html" class="nav-link">Tentang SCK</a>
+                <a href="join.html" class="nav-link">Join SCK</a>
+                <a href="event.html" class="nav-link">Event SCK</a>
+                <a href="alat-bantu.html" class="nav-link">Alat Bantu</a>
+                <a href="set-web.html" class="nav-link active set-web-link">Set Web</a>
             </div>
             <div class="nav-toggle" id="navToggle">
                 <span></span><span></span><span></span>
@@ -46,7 +44,7 @@
         <p>Kelola konten website organisasi</p>
     </div>
 
-    <!-- Login Form -->
+    <!-- Login Form (ditampilkan jika belum login) -->
     <div id="loginForm" class="login-form">
         <h2><i class="fas fa-lock"></i> Admin Login</h2>
         <form id="adminLogin">
@@ -54,24 +52,16 @@
             <input type="password" id="loginPassword" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
-        <p style="margin-top: 15px; color: var(--text-secondary); font-size: 0.85rem;">
-            <i class="fas fa-info-circle"></i> Login untuk mengakses panel admin
-        </p>
-        <p style="margin-top: 10px;">
-            <a href="login.html" target="_parent" style="color: var(--neon-blue);">
-                <i class="fas fa-arrow-right"></i> Atau login di halaman terpisah
-            </a>
-        </p>
     </div>
 
-    <!-- Admin Panel -->
+    <!-- Admin Panel (ditampilkan setelah login) -->
     <div id="adminPanel" class="admin-panel" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-            <h2><i class="fas fa-user-cog"></i> Panel Admin</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2>Panel Admin</h2>
             <button id="logoutBtn" class="btn btn-secondary" style="padding: 8px 20px;">Logout</button>
         </div>
 
-        <!-- Set Event -->
+        <!-- Set Event Section -->
         <div class="admin-section">
             <h3><i class="fas fa-calendar-alt"></i> Set Event</h3>
             <div class="setting-item">
@@ -96,7 +86,7 @@
             <button id="saveEventBtn" class="add-btn">Simpan Event</button>
         </div>
 
-        <!-- Set Anggota & Divisi -->
+        <!-- Set Anggota & Divisi Section -->
         <div class="admin-section">
             <h3><i class="fas fa-users"></i> Set Anggota & Divisi</h3>
             <div class="setting-item">
@@ -110,14 +100,14 @@
             <button id="saveStatsBtn" class="add-btn">Simpan Statistik</button>
         </div>
 
-        <!-- Set Anggota Per Divisi -->
+        <!-- Set Anggota Per Divisi Section -->
         <div class="admin-section">
             <h3><i class="fas fa-layer-group"></i> Set Anggota Per Divisi</h3>
             <div id="divisionsContainer"></div>
             <button id="addDivisionBtn" class="add-btn"><i class="fas fa-plus"></i> Tambah Divisi</button>
         </div>
 
-        <!-- Set Join Links -->
+        <!-- Set Join Links Section -->
         <div class="admin-section">
             <h3><i class="fas fa-link"></i> Set Link Join</h3>
             <div class="setting-item">
@@ -148,18 +138,18 @@
             <button id="saveJoinLinksBtn" class="add-btn">Simpan Link Join</button>
         </div>
 
-        <!-- Set Akun Admin -->
+        <!-- Set Akun Admin Section -->
         <div class="admin-section">
             <h3><i class="fas fa-user-shield"></i> Set Akun Admin</h3>
             <div id="adminAccountsList"></div>
-            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <input type="text" id="newAdminUsername" placeholder="Username baru" style="flex: 1; min-width: 120px;">
-                <input type="password" id="newAdminPassword" placeholder="Password" style="flex: 1; min-width: 120px;">
-                <select id="newAdminRole" style="padding: 10px;">
+            <div style="margin-top: 15px;">
+                <input type="text" id="newAdminUsername" placeholder="Username baru" style="width: calc(33% - 10px);">
+                <input type="password" id="newAdminPassword" placeholder="Password" style="width: calc(33% - 10px);">
+                <select id="newAdminRole" style="width: calc(33% - 10px);">
                     <option value="admin">Admin</option>
                     <option value="moderator">Moderator</option>
                 </select>
-                <button id="addAdminBtn" class="add-btn" style="flex: 1; min-width: 100px;">+ Tambah Admin</button>
+                <button id="addAdminBtn" class="add-btn" style="width: 100%; margin-top: 10px;">+ Tambah Admin</button>
             </div>
         </div>
     </div>
@@ -168,23 +158,23 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="https://c.top4top.io/p_3819ed0vz1.jpg" alt="Logo">
+                    <img src="https://via.placeholder.com/50x50?text=SCK" alt="Logo">
                     <h3>Sekte Creator Kece</h3>
                     <p>Official Sekte</p>
                 </div>
                 <div class="footer-links">
                     <h4>Tautan Cepat</h4>
-                    <a href="../index.html" target="_parent">Beranda</a>
-                    <a href="struktur.html" target="_parent">Struktur SCK</a>
-                    <a href="tentang.html" target="_parent">Tentang SCK</a>
-                    <a href="join.html" target="_parent">Join SCK</a>
+                    <a href="../index.html">Beranda</a>
+                    <a href="struktur.html">Struktur SCK</a>
+                    <a href="tentang.html">Tentang SCK</a>
+                    <a href="join.html">Join SCK</a>
                 </div>
                 <div class="footer-contact">
                     <h4>Hubungi Developer</h4>
-                    <a href="https://wa.me/6281997149736" class="contact-wa" target="_parent">
+                    <a href="https://wa.me/6281997149736" class="contact-wa">
                         <i class="fab fa-whatsapp"></i> 081997149736
                     </a>
-                    <a href="only-developer.html" class="dev-link" target="_parent">
+                    <a href="only-developer.html" class="dev-link">
                         <i class="fas fa-lock"></i> Only Developer
                     </a>
                 </div>
@@ -198,32 +188,37 @@
     <script src="../js/main.js"></script>
     <script src="../js/auth.js"></script>
     <script>
+        // Check login status on page load
         function checkLoginStatus() {
             if (isAdminLoggedIn() || isDevLoggedIn()) {
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
                 loadAdminData();
             } else {
-                // Tampilkan form login + link ke login.html
                 document.getElementById('loginForm').style.display = 'block';
                 document.getElementById('adminPanel').style.display = 'none';
             }
         }
 
+        // Load all admin data
         function loadAdminData() {
             const orgData = organizationData;
             
+            // Load event data
             const event = eventData;
             document.getElementById('eventImageUrl').value = event.imageUrl || '';
             document.getElementById('eventDescription').value = event.description || '';
             document.getElementById('eventStatus').value = event.hasEvent ? 'true' : 'false';
             document.getElementById('eventContacts').value = event.contacts.join(',');
             
+            // Load stats
             document.getElementById('setTotalMembers').value = getTotalMembers();
             document.getElementById('setTotalDivisions').value = getTotalDivisions();
             
+            // Load divisions
             loadDivisionsList();
             
+            // Load join links
             const links = joinLinks;
             document.getElementById('seleksiTitle').value = links.seleksi.title;
             document.getElementById('seleksiDesc').value = links.seleksi.description;
@@ -232,6 +227,7 @@
             document.getElementById('familyDesc').value = links.family.description;
             document.getElementById('familyUrl').value = links.family.url;
             
+            // Load admin accounts
             loadAdminAccounts();
         }
         
@@ -250,6 +246,7 @@
                 `;
             });
             
+            // Add remove event listeners
             document.querySelectorAll('.remove-div-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const index = parseInt(btn.dataset.index);
@@ -258,6 +255,7 @@
                 });
             });
             
+            // Add change event listeners
             organizationData.divisions.forEach((_, index) => {
                 const nameInput = document.getElementById(`divName_${index}`);
                 const membersInput = document.getElementById(`divMembers_${index}`);
@@ -298,6 +296,7 @@
             });
         }
         
+        // Save event
         document.getElementById('saveEventBtn')?.addEventListener('click', () => {
             const hasEvent = document.getElementById('eventStatus').value === 'true';
             const imageUrl = document.getElementById('eventImageUrl').value;
@@ -309,15 +308,18 @@
             alert('Event berhasil disimpan!');
         });
         
+        // Save stats
         document.getElementById('saveStatsBtn')?.addEventListener('click', () => {
             const totalMembers = parseInt(document.getElementById('setTotalMembers').value) || 0;
             const totalDivisions = parseInt(document.getElementById('setTotalDivisions').value) || 0;
+            // Adjust divisions count
             while (organizationData.divisions.length < totalDivisions) {
                 addDivision(`Divisi Baru ${organizationData.divisions.length + 1}`, 0);
             }
             while (organizationData.divisions.length > totalDivisions) {
                 removeDivision(organizationData.divisions.length - 1);
             }
+            // Update total members (distribute to divisions)
             const perDivision = Math.floor(totalMembers / totalDivisions);
             organizationData.divisions.forEach((div, i) => {
                 if (i === organizationData.divisions.length - 1) {
@@ -332,6 +334,7 @@
             alert('Statistik berhasil disimpan!');
         });
         
+        // Add division
         document.getElementById('addDivisionBtn')?.addEventListener('click', () => {
             const newName = prompt('Nama divisi baru:');
             if (newName) {
@@ -340,6 +343,7 @@
             }
         });
         
+        // Save join links
         document.getElementById('saveJoinLinksBtn')?.addEventListener('click', () => {
             updateJoinLink('seleksi', 
                 document.getElementById('seleksiTitle').value,
@@ -354,6 +358,7 @@
             alert('Link join berhasil disimpan!');
         });
         
+        // Add admin
         document.getElementById('addAdminBtn')?.addEventListener('click', () => {
             const username = document.getElementById('newAdminUsername').value;
             const password = document.getElementById('newAdminPassword').value;
@@ -372,10 +377,12 @@
             }
         });
         
+        // Logout
         document.getElementById('logoutBtn')?.addEventListener('click', () => {
             logout();
         });
         
+        // Login form submit
         document.getElementById('adminLogin')?.addEventListener('submit', (e) => {
             e.preventDefault();
             const username = document.getElementById('loginUsername').value;
@@ -388,6 +395,7 @@
             }
         });
         
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             checkLoginStatus();
         });
