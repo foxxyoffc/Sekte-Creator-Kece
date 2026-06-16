@@ -18,6 +18,13 @@
         <i class="fas fa-moon" style="display: none;"></i>
     </div>
 
+    <div class="music-control" id="musicControl">
+        <i class="fas fa-play" id="musicIcon"></i>
+        <audio id="bgMusic" loop preload="auto">
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -45,20 +52,48 @@
     </div>
 
     <div class="container" style="padding: 20px;">
-        <div class="grid-2" style="max-width: 800px; margin: 0 auto;">
+        <div class="grid-2" style="max-width: 1000px; margin: 0 auto;">
+            
             <!-- TikTok Downloader Card -->
             <div class="tool-card" id="tiktokCard">
                 <i class="fab fa-tiktok"></i>
-                <h3>Download VT / Salin Caption VT</h3>
+                <h3>Download TikTok</h3>
                 <p>Download video TikTok tanpa watermark + salin caption</p>
+                <div style="margin-top: 15px;">
+                    <span class="btn btn-primary" style="padding: 8px 20px; font-size: 0.8rem;">Gunakan</span>
+                </div>
             </div>
 
             <!-- Pinterest Downloader Card -->
             <div class="tool-card" id="pinterestCard">
                 <i class="fab fa-pinterest"></i>
-                <h3>Download Video/Foto Pinterest</h3>
+                <h3>Download Pinterest</h3>
                 <p>Download video atau foto dari Pinterest dengan mudah</p>
+                <div style="margin-top: 15px;">
+                    <span class="btn btn-primary" style="padding: 8px 20px; font-size: 0.8rem;">Gunakan</span>
+                </div>
             </div>
+
+            <!-- YouTube Downloader Card -->
+            <div class="tool-card" id="youtubeCard">
+                <i class="fab fa-youtube"></i>
+                <h3>Download YouTube</h3>
+                <p>Download video YouTube MP4 atau audio MP3</p>
+                <div style="margin-top: 15px;">
+                    <span class="btn btn-primary" style="padding: 8px 20px; font-size: 0.8rem;">Gunakan</span>
+                </div>
+            </div>
+
+            <!-- Instagram Downloader Card -->
+            <div class="tool-card" id="instagramCard">
+                <i class="fab fa-instagram"></i>
+                <h3>Download Instagram</h3>
+                <p>Download video, foto, reels, dan story Instagram</p>
+                <div style="margin-top: 15px;">
+                    <span class="btn btn-primary" style="padding: 8px 20px; font-size: 0.8rem;">Gunakan</span>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -95,9 +130,43 @@
 
     <script src="../js/main.js"></script>
     <script src="../js/auth.js"></script>
+    <script src="../js/tools.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            loadAlatBantu();
+            initTheme();
+            initNavToggle();
+            initCustomCursor();
+            initMusicControl();
+            
+            // Tool cards navigation
+            const tiktokCard = document.getElementById('tiktokCard');
+            const pinterestCard = document.getElementById('pinterestCard');
+            const youtubeCard = document.getElementById('youtubeCard');
+            const instagramCard = document.getElementById('instagramCard');
+            
+            if (tiktokCard) {
+                tiktokCard.addEventListener('click', () => {
+                    window.location.href = 'download-tiktok.html';
+                });
+            }
+            
+            if (pinterestCard) {
+                pinterestCard.addEventListener('click', () => {
+                    window.location.href = 'download-pinterest.html';
+                });
+            }
+            
+            if (youtubeCard) {
+                youtubeCard.addEventListener('click', () => {
+                    window.location.href = 'download-youtube.html';
+                });
+            }
+            
+            if (instagramCard) {
+                instagramCard.addEventListener('click', () => {
+                    window.location.href = 'download-instagram.html';
+                });
+            }
         });
     </script>
 </body>
