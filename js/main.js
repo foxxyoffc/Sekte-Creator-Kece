@@ -163,8 +163,8 @@ function initVideoControl() {
 
 // ========== LOAD STATS ==========
 function loadStats() {
-    const totalMembers = localStorage.getItem('totalMembers') || '98';
-    const totalDivisions = localStorage.getItem('totalDivisions') || '3';
+    const totalMembers = localStorage.getItem('totalMembers') || '162';
+    const totalDivisions = localStorage.getItem('totalDivisions') || '2';
     
     const membersEl = document.getElementById('totalMembers');
     const divisionsEl = document.getElementById('totalDivisions');
