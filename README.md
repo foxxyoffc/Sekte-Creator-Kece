@@ -1,6 +1,6 @@
 <div align="center">
   
-  <img src="https://via.placeholder.com/150x150?text=SCK" alt="Logo" width="150" style="border-radius: 20px;">
+  <img src="https://j.top4top.io/p_38195t90r1.jpg" alt="Logo" width="150" style="border-radius: 20px;">
   
   # ⚡ SEKTE CREATOR KECE ⚡
   
@@ -83,16 +83,16 @@ sekte-creator-kece/
 
 | Username | Password | Role |
 |----------|----------|------|
-| `owner` | `sck2025` | Owner |
-| `admin1` | `admin123` | Admin |
-| `moderator` | `mod123` | Moderator |
+| `owner` | `xxxxxx` | Owner |
+| `admin1` | `xxxxxx` | Co-Own 01 |
+| `moderator` | `xxxxxx` | Co-Own 02 |
 
 ### Akun Default Developer (Only Developer)
 
 | Username | Password |
 |----------|----------|
-| `raps` | `sektecreator123` |
-| `developer` | `dev2025` |
+| `xxxxx` | `xxxxxx` |
+| `xxxxx` | `xxxxxx` |
 
 > ⚠️ **Catatan:** Semua akun dapat diubah/ditambah melalui panel **Only Developer**.
 
@@ -230,9 +230,9 @@ Copyright © 2025 Sekte Creator Kece
 
 <div align="center">
 
-⭐ Made with love by SCK Team ⭐
+⭐ Made by SCK Team ⭐
 
-"Bersama kita berkarya, bersama kita kece!"
+"Enjoy The Process, 1 Marga, Bermacam Karya!"
 
 ---
 
