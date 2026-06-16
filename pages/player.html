@@ -334,6 +334,103 @@
 
         console.log('🎵 Player loaded! Musik tetap jalan walau pindah halaman.');
         console.log('⌨️ Shortcut: Space = Play/Stop, R = Refresh');
+
+        // ========== RIPPLE EFFECT UNTUK IFRAME ==========
+function injectRippleToIframe() {
+    try {
+        const iframeDoc = document.getElementById('contentFrame').contentDocument || 
+                          document.getElementById('contentFrame').contentWindow.document;
+        if (!iframeDoc) return;
+        
+        // Inject CSS
+        const style = iframeDoc.createElement('style');
+        style.textContent = `
+            .ripple {
+                position: fixed;
+                border-radius: 50%;
+                background: rgba(0, 242, 254, 0.4);
+                transform: scale(0);
+                animation: rippleAnim 0.6s ease-out forwards;
+                pointer-events: none;
+                z-index: 99999;
+                width: 20px;
+                height: 20px;
+                margin-left: -10px;
+                margin-top: -10px;
+            }
+            @keyframes rippleAnim {
+                to { transform: scale(6); opacity: 0; }
+            }
+            * {
+                -webkit-tap-highlight-color: transparent;
+                -webkit-touch-callout: none;
+            }
+            .btn:active, .leader-card:active, .tool-card:active,
+            .event-card:active, .card:active {
+                transform: scale(0.97);
+                transition: transform 0.1s ease;
+            }
+        `;
+        iframeDoc.head.appendChild(style);
+        
+        // Inject JS
+        const script = iframeDoc.createElement('script');
+        script.textContent = `
+            let lastTouchTime = 0;
+            let isScrolling = false;
+            let scrollTimeout;
+            
+            document.addEventListener('touchstart', function(e) {
+                const touch = e.touches[0];
+                const now = Date.now();
+                if (now - lastTouchTime < 50) return;
+                lastTouchTime = now;
+                isScrolling = false;
+                createRipple(touch.clientX, touch.clientY);
+            }, { passive: true });
+            
+            document.addEventListener('touchmove', function(e) {
+                isScrolling = true;
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => { isScrolling = false; }, 300);
+            }, { passive: true });
+            
+            document.addEventListener('click', function(e) {
+                if (isScrolling) return;
+                createRipple(e.clientX, e.clientY);
+            });
+            
+            function createRipple(x, y) {
+                const oldRipples = document.querySelectorAll('.ripple');
+                oldRipples.forEach(el => el.remove());
+                const ripple = document.createElement('div');
+                ripple.className = 'ripple';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                document.body.appendChild(ripple);
+                setTimeout(() => { ripple.remove(); }, 700);
+            }
+            
+            document.addEventListener('click', function(e) {
+                const target = e.target.closest('a, button, .btn, .leader-card, .tool-card, .event-card, .card');
+                if (target) {
+                    const ripples = document.querySelectorAll('.ripple');
+                    ripples.forEach(el => el.remove());
+                }
+            }, true);
+        `;
+        iframeDoc.head.appendChild(script);
+        
+        console.log('✅ Ripple effect injected to iframe');
+    } catch (e) {
+        console.log('⚠️ Cannot inject ripple to iframe (CORS)');
+    }
+}
+
+// Panggil setelah iframe load
+document.getElementById('contentFrame').addEventListener('load', function() {
+    injectRippleToIframe();
+});
     </script>
 </body>
 </html>
