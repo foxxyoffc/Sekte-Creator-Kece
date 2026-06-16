@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Struktur Organisasi - Sekte Creator Kece</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon" style="display: none;"></i>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://via.placeholder.com/40x40?text=SCK" alt="Logo" class="logo-img">
+                <span>SCK</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="../index.html" class="nav-link">Beranda</a>
+                <a href="struktur.html" class="nav-link active">Struktur</a>
+                <a href="tentang.html" class="nav-link">Tentang</a>
+                <a href="join.html" class="nav-link">Join</a>
+                <a href="event.html" class="nav-link">Event</a>
+                <a href="alat-bantu.html" class="nav-link">Alat Bantu</a>
+                <a href="set-web.html" class="nav-link set-web-link">Set Web</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-sitemap"></i> Struktur Organisasi</h1>
+        <p>Kenali para penggerak Sekte Creator Kece</p>
+    </div>
+
+    <div class="struktur-grid" id="strukturContainer">
+        <!-- Owner Level -->
+        <div class="struktur-level">
+            <h2><i class="fas fa-crown"></i> Owner</h2>
+            <div class="grid-1" style="max-width: 400px; margin: 0 auto;">
+                <div class="leader-card" id="ownerCard" data-wa="">
+                    <div class="leader-avatar"><i class="fas fa-crown"></i></div>
+                    <div class="leader-name" id="ownerName">Loading...</div>
+                    <div class="leader-role">Owner & Founder</div>
+                    <div class="leader-bio" id="ownerBio"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Co-Owners Level -->
+        <div class="struktur-level">
+            <h2><i class="fas fa-users"></i> Co-Owner</h2>
+            <div class="grid-2" id="coOwnersContainer">
+                <!-- Dynamic content from JS -->
+            </div>
+        </div>
+
+        <!-- Leaders Level -->
+        <div class="struktur-level">
+            <h2><i class="fas fa-chalkboard-user"></i> Leader Divisi</h2>
+            <div class="grid-2" id="leadersContainer">
+                <!-- Dynamic content from JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://via.placeholder.com/50x50?text=SCK" alt="Logo">
+                    <h3>Sekte Creator Kece</h3>
+                    <p>Official Organization</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <a href="../index.html">Beranda</a>
+                    <a href="struktur.html">Struktur</a>
+                    <a href="tentang.html">Tentang</a>
+                    <a href="join.html">Join</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Developer</h4>
+                    <a href="https://wa.me/6281234567890" class="contact-wa">
+                        <i class="fab fa-whatsapp"></i> +62 812-3456-7890
+                    </a>
+                    <a href="only-developer.html" class="dev-link">
+                        <i class="fas fa-lock"></i> Only Developer
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sekte Creator Kece. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Load struktur data when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStrukturData();
+        });
+    </script>
+</body>
+</html>
