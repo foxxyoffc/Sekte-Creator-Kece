@@ -112,5 +112,16 @@
     // Tambahkan fungsi copy untuk pinterest
     window.copyPinterestUrl = copyPinterestUrl;
 </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('downloadBtn');
+        if (btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                downloadPinterest();
+            });
+        }
+    });
+    </script>
 </body>
 </html>
