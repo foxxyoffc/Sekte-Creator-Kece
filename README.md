@@ -1,6 +1,6 @@
 <div align="center">
   
-  <img src="https://j.top4top.io/p_38195t90r1.jpg" alt="Logo" width="150" style="border-radius: 20px;">
+  <img src="https://files.catbox.moe/o1b9sh.jpg" alt="Logo" width="150" style="border-radius: 20px;">
   
   # ⚡ SEKTE CREATOR KECE ⚡
   
