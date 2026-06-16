@@ -156,8 +156,6 @@ let organizationData = JSON.parse(localStorage.getItem('organizationData')) || {
         { division: 'Divisi 02', name: 'Jemxnxx', wa: '6285157038644', bio: 'Lead Div 02, Babu admin🗿' }
     ],
     divisions: [
-        { name: 'Total Anggota', members: 162 },
-        { name: 'Total Divisi', divisi: 02 },
         { name: 'Divisi 01', members: 63 },
         { name: 'Divisi 02', members: 17 },
         { name: 'SCK Family', members: 19 }
