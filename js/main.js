@@ -416,3 +416,73 @@ window.loadTentangData = loadTungguData;
 window.loadJoinLinks = loadJoinLinks;
 window.loadEventData = loadEventData;
 window.loadStats = loadStats;
+
+// ========== RIPPLE EFFECT (TOUCHSCREEN) ==========
+let lastTouchTime = 0;
+let isScrolling = false;
+let scrollTimeout;
+
+document.addEventListener('touchstart', function(e) {
+    // Deteksi apakah ini sentuhan atau scrolling
+    const touch = e.touches[0];
+    const now = Date.now();
+    
+    // Jika jarak waktu antar touch terlalu dekat, skip (biasanya gesture)
+    if (now - lastTouchTime < 50) {
+        return;
+    }
+    lastTouchTime = now;
+    
+    // Tandai bahwa ini adalah tap, bukan scroll
+    isScrolling = false;
+    
+    // Buat ripple di posisi sentuhan
+    createRipple(touch.clientX, touch.clientY);
+}, { passive: true });
+
+// Deteksi scroll untuk menonaktifkan ripple
+document.addEventListener('touchmove', function(e) {
+    isScrolling = true;
+    
+    // Clear timeout sebelumnya
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+    }, 300);
+}, { passive: true });
+
+// Mouse click (untuk desktop)
+document.addEventListener('click', function(e) {
+    // Skip jika sedang scrolling
+    if (isScrolling) return;
+    createRipple(e.clientX, e.clientY);
+});
+
+// Fungsi membuat ripple
+function createRipple(x, y) {
+    // Hapus ripple lama (biar ga numpuk)
+    const oldRipples = document.querySelectorAll('.ripple');
+    oldRipples.forEach(el => el.remove());
+    
+    const ripple = document.createElement('div');
+    ripple.className = 'ripple';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    document.body.appendChild(ripple);
+    
+    // Hapus setelah animasi selesai
+    setTimeout(() => {
+        ripple.remove();
+    }, 700);
+}
+
+// ========== MATIKAN RIPPLE PADA ELEMEN TERTENTU ==========
+// (tombol, link, card) - biar ga double efek
+document.addEventListener('click', function(e) {
+    const target = e.target.closest('a, button, .btn, .leader-card, .tool-card, .event-card, .card');
+    if (target) {
+        // Hapus ripple yang dibuat oleh event click global
+        const ripples = document.querySelectorAll('.ripple');
+        ripples.forEach(el => el.remove());
+    }
+}, true); // true = capture phase, biar jalan duluan
