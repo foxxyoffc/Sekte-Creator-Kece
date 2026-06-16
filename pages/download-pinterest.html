@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .ripple { display: none !important; }
+        .cursor, .cursor-follower { display: none !important; }
+        body { cursor: default !important; }
+    </style>
 </head>
 <body>
-
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
 
     <div class="theme-toggle" id="themeToggle">
         <i class="fas fa-sun"></i>
@@ -21,7 +23,7 @@
     <div class="music-control" id="musicControl">
         <i class="fas fa-play" id="musicIcon"></i>
         <audio id="bgMusic" loop preload="auto">
-            <source src="https://e.top4top.io/m_3819ce0o01.mp3" type="audio/mpeg">
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
         </audio>
     </div>
 
@@ -32,13 +34,13 @@
                 <span>SCK</span>
             </div>
             <div class="nav-menu" id="navMenu">
-                <a href="../index.html" class="nav-link">Beranda</a>
-                <a href="struktur.html" class="nav-link">Struktur SCK</a>
-                <a href="tentang.html" class="nav-link">Tentang SCK</a>
-                <a href="join.html" class="nav-link">Join SCK</a>
-                <a href="event.html" class="nav-link">Event SCK</a>
-                <a href="alat-bantu.html" class="nav-link">Alat Bantu</a>
-                <a href="set-web.html" class="nav-link set-web-link">Set Web</a>
+                <a href="../index.html" target="_parent" class="nav-link">Beranda</a>
+                <a href="struktur.html" target="_parent" class="nav-link">Struktur SCK</a>
+                <a href="tentang.html" target="_parent" class="nav-link">Tentang SCK</a>
+                <a href="join.html" target="_parent" class="nav-link">Join SCK</a>
+                <a href="event.html" target="_parent" class="nav-link">Event SCK</a>
+                <a href="alat-bantu.html" target="_parent" class="nav-link">Alat Bantu</a>
+                <a href="set-web.html" target="_parent" class="nav-link set-web-link">Set Web</a>
             </div>
             <div class="nav-toggle" id="navToggle">
                 <span></span><span></span><span></span>
@@ -47,20 +49,20 @@
     </nav>
 
     <div class="page-header">
-        <h1><i class="fab fa-pinterest"></i> Download Video/Foto Pinterest</h1>
+        <h1><i class="fab fa-pinterest"></i> Download Pinterest</h1>
         <p>Download video atau foto dari Pinterest dengan mudah</p>
     </div>
 
     <div class="download-container">
         <input type="text" id="pinterestUrl" class="url-input" placeholder="Masukkan URL Pinterest... (contoh: https://www.pinterest.com/pin/123456789)">
-        <button id="downloadBtn" class="download-btn" onclick="downloadPinterest()">
+        <button id="downloadBtn" class="download-btn">
             <i class="fab fa-pinterest"></i> Download & Proses
         </button>
         
         <div id="pinterestResult" style="margin-top: 30px;"></div>
         
         <div style="margin-top: 30px; text-align: center;">
-            <a href="alat-bantu.html" class="btn btn-secondary">
+            <a href="alat-bantu.html" target="_parent" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Kembali ke Alat Bantu
             </a>
         </div>
@@ -76,17 +78,17 @@
                 </div>
                 <div class="footer-links">
                     <h4>Tautan Cepat</h4>
-                    <a href="../index.html">Beranda</a>
-                    <a href="struktur.html">Struktur SCK</a>
-                    <a href="tentang.html">Tentang SCK</a>
-                    <a href="join.html">Join SCK</a>
+                    <a href="../index.html" target="_parent">Beranda</a>
+                    <a href="struktur.html" target="_parent">Struktur SCK</a>
+                    <a href="tentang.html" target="_parent">Tentang SCK</a>
+                    <a href="join.html" target="_parent">Join SCK</a>
                 </div>
                 <div class="footer-contact">
                     <h4>Hubungi Developer</h4>
-                    <a href="https://wa.me/6281997149736" class="contact-wa">
+                    <a href="https://wa.me/6281997149736" class="contact-wa" target="_parent">
                         <i class="fab fa-whatsapp"></i> 081997149736
                     </a>
-                    <a href="only-developer.html" class="dev-link">
+                    <a href="only-developer.html" class="dev-link" target="_parent">
                         <i class="fas fa-lock"></i> Only Developer
                     </a>
                 </div>
@@ -101,27 +103,25 @@
     <script src="../js/auth.js"></script>
     <script src="../js/tools.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            initNavToggle();
-            initCustomCursor();
-            initMusicControl();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Init functions
+            if (typeof initTheme === 'function') initTheme();
+            if (typeof initNavToggle === 'function') initNavToggle();
+            if (typeof initMusicControl === 'function') initMusicControl();
+            
+            // Fix tombol download
+            const btn = document.getElementById('downloadBtn');
+            if (btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (typeof downloadPinterest === 'function') {
+                        downloadPinterest();
+                    } else {
+                        alert('Fungsi download belum siap!');
+                    }
+                });
+            }
         });
-    </script>
-    <script>
-    // Tambahkan fungsi copy untuk pinterest
-    window.copyPinterestUrl = copyPinterestUrl;
-</script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const btn = document.getElementById('downloadBtn');
-        if (btn) {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                downloadPinterest();
-            });
-        }
-    });
     </script>
 </body>
 </html>
