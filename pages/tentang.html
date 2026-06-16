@@ -3,10 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Tentang Sekte - Sekte Creator Kece</title>
+    <title>Tentang SCK - Sekte Creator Kece</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Hilangin ripple effect di halaman ini */
+        .ripple { display: none !important; }
+        * { -webkit-tap-highlight-color: transparent !important; }
+        
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .about-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid var(--glass-border);
+        }
+        .about-section h2 {
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--neon-blue);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        .about-section p {
+            color: var(--text-secondary);
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+        .about-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .about-section ul li {
+            color: var(--text-secondary);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.95rem;
+        }
+        .about-section ul li:last-child {
+            border-bottom: none;
+        }
+        .about-section ul li strong {
+            color: var(--neon-blue);
+        }
+        .badge-owner {
+            color: #ffd700;
+            font-weight: 700;
+        }
+        .badge-co {
+            color: #00f2fe;
+            font-weight: 600;
+        }
+        .badge-admin {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+        .highlight {
+            color: var(--neon-blue);
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .about-section {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -39,95 +107,81 @@
         </div>
     </nav>
 
+    <!-- ========== HEADER ========== -->
     <div class="page-header">
-        <h1><i class="fas fa-info-circle"></i> Tentang Sekte</h1>
+        <h1><i class="fas fa-info-circle"></i> Tentang SCK</h1>
         <p>Deskripsi Tentang Sekte Creator Kece</p>
     </div>
 
-    <div class="container" style="padding: 0 20px;">
-        <!-- Profile Section -->
-        <div class="about-profile" style="text-align: center; margin-bottom: 50px;">
-            <div class="profile-image" style="width: 180px; height: 180px; margin: 0 auto 20px;">
-                <img src="https://j.top4top.io/p_38195t90r1.jpg" alt="Sekte Creator Kece" id="aboutProfileImage">
-            </div>
-            <h2 style="color: var(--neon-blue); margin-bottom: 15px;">Sekte Creator Kece (SCK)</h2>
-            <p style="max-width: 700px; margin: 0 auto; color: var(--text-secondary);">Sekte Creator Kece [SCK], Adalah sekte yg berisi Creator Preset/Editing Video Game. Sekte ini berdiri pada tanggal 03 April 2026 yg Di buat oleh Owner tercinta kita : Nowamura anjayy.
-Sekte ini terdiri dari 2 Divisi Creator (Khusus Creator/Editor/Remixer), dan 1 Family (Untuk Umum). Petinggi kami terdiri dari Co-Own & Admin Divisi.
-Co-Own :
-1. Foxxy Bziirr
-2. Rora NdokKodok
+    <!-- ========== KONTEN UTAMA ========== -->
+    <div class="about-content">
 
-Admin Divisi 1&2 :
-1. All Own + Co-Own (yg kece & badass🥶)
-2. Luka (Pecinta Mommy)
-3. Viera (bini nya own)
-4. yue (ntah di pungut darimana ni bocah)
-5. jemxii (Sefuhh mc)
-
-Sekian aja tentang SCK, yg mau join bisa hubungi lewat kolom hubungin, mau yg developer kek, admin, bebas lah intinya, atau bisa langsung ke halaman "join sck", sung join!!, adminnya seru, join = dapet kiss dari nowa selaku owner (Khusus lanang!!)
+        <!-- ===== DESKRIPSI ORGANISASI ===== -->
+        <div class="about-section">
+            <h2><i class="fas fa-flag"></i> Profil Organisasi</h2>
+            <p>
+                <strong>Sekte Creator Kece</strong> adalah sekte yang berisi para <strong>Creator Preset/Editing Video Game</strong>. 
+                Sekte ini berdiri pada tanggal <strong>03 April 2026</strong> yang dibuat oleh Owner tercinta kita: 
+                <span class="badge-owner">Nowamura anjayy</span>.
+            </p>
+            <br>
+            <p>
+                Sekte ini terdiri dari <strong>2 Divisi Creator</strong> (Khusus Creator/Editor/Remixer), dan <strong>1 Family</strong> (Untuk Umum). 
+                Petinggi kami terdiri dari Co-Own & Admin Divisi.
             </p>
         </div>
 
-        <!-- Stats Section -->
-        <div class="about-stats" style="display: flex; justify-content: center; gap: 50px; margin-bottom: 50px; flex-wrap: wrap;">
-            <div class="stat-item">
-                <i class="fas fa-users"></i>
-                <span id="totalAnggotaTentang">0</span>
-                <p>Total Anggota</p>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-layer-group"></i>
-                <span id="totalDivisiTentang">0</span>
-                <p>Total Divisi</p>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-calendar-alt"></i>
-                <span>2026</span>
-                <p>Tahun Berdiri</p>
-            </div>
+        <!-- ===== CO-OWNER ===== -->
+        <div class="about-section">
+            <h2><i class="fas fa-crown"></i> Co-Owner</h2>
+            <ul>
+                <li><span class="badge-co">1. Foxxy Bziirr</span></li>
+                <li><span class="badge-co">2. Rora NdokKodok</span></li>
+            </ul>
         </div>
 
-        <!-- Divisions Section -->
-        <div class="about-divisions">
-            <h2 style="text-align: center; margin-bottom: 30px; color: var(--neon-blue);">
-                <i class="fas fa-layer-group"></i> Struktur Divisi
-            </h2>
-            <div class="grid-2" id="divisiList">
-                <!-- Dynamic content from JS -->
-            </div>
+        <!-- ===== ADMIN DIVISI ===== -->
+        <div class="about-section">
+            <h2><i class="fas fa-user-shield"></i> Admin Divisi 1 &amp; 2</h2>
+            <ul>
+                <li><span class="badge-admin">1. All Own + Co-Own</span> (yg kece &amp; badass 🥶)</li>
+                <li><span class="badge-admin">2. Luka</span> (Pecinta Mommy)</li>
+                <li><span class="badge-admin">3. Viera</span> (bini nya own)</li>
+                <li><span class="badge-admin">4. yue</span> (ntah di pungut darimana ni bocah)</li>
+                <li><span class="badge-admin">5. jemxii</span> (Sefuhh mc)</li>
+            </ul>
         </div>
 
-        <!-- Vision & Mission -->
-        <div class="about-vm" style="margin: 50px 0;">
-            <div class="grid-2">
-                <div class="card">
-                    <h3><i class="fas fa-eye"></i> Visi</h3>
-                    <p>Menjadi komunitas kreator terdepan di Indonesia yang melahirkan karya-karya inovatif dan berdampak positif bagi masyarakat. ANJAAYYY WKWK🗿</p>
-                </div>
-                <div class="card">
-                    <h3><i class="fas fa-bullseye"></i> Misi</h3>
-                    <ul style="padding-left: 20px; margin-top: 10px;">
-                        <li>Mengembangkan bakat dan potensi anggota</li>
-                        <li>Menciptakan kolaborasi antar kreator</li>
-                        <li>Menghasilkan karya berkualitas</li>
-                        <li>Mengembangkan komunitas sampai Internasional</li>
-                    </ul>
-                </div>
-            </div>
+        <!-- ===== PENUTUP ===== -->
+        <div class="about-section">
+            <h2><i class="fas fa-heart"></i> Penutup</h2>
+            <p>
+                Sekian aja tentang SCK. Yang mau join bisa hubungi lewat kolom <strong>hubungi</strong>, 
+                mau yang developer kek, admin, bebas lah intinya. 
+                Atau bisa langsung ke halaman <span class="highlight">"Join SCK"</span>, sung join!!, 
+                adminnya seru, join = dapet kiss dari <span class="badge-owner">Nowa</span> selaku owner 
+                <strong>(Khusus lanang!!)</strong>
+            </p>
+            <br>
+            <p style="text-align: center; color: var(--neon-blue);">
+                <i class="fas fa-rocket"></i> Yuk join SCK sini, ga join aing rodokk😈! <i class="fas fa-rocket"></i>
+            </p>
         </div>
+
     </div>
 
+    <!-- ========== FOOTER ========== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="https://via.placeholder.com/50x50?text=SCK" alt="Logo">
+                    <img src="https://c.top4top.io/p_3819ed0vz1.jpg" alt="Logo">
                     <h3>Sekte Creator Kece</h3>
                     <p>Official Sekte</p>
                 </div>
                 <div class="footer-links">
                     <h4>Tautan Cepat</h4>
-                    <a href="../index.html">Beranda SCK</a>
+                    <a href="../index.html">Beranda</a>
                     <a href="struktur.html">Struktur SCK</a>
                     <a href="tentang.html">Tentang SCK</a>
                     <a href="join.html">Join SCK</a>
@@ -150,17 +204,5 @@ Sekian aja tentang SCK, yg mau join bisa hubungi lewat kolom hubungin, mau yg de
 
     <script src="../js/main.js"></script>
     <script src="../js/auth.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            loadTentangData();
-            
-            // Load profile image from localStorage
-            const orgData = JSON.parse(localStorage.getItem('organizationData')) || {};
-            const aboutImg = document.getElementById('aboutProfileImage');
-            if (aboutImg && orgData.profileImage) {
-                aboutImg.src = orgData.profileImage;
-            }
-        });
-    </script>
 </body>
 </html>
