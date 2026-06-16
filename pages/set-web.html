@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Set Web - Sekte Creator Kece</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon" style="display: none;"></i>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://via.placeholder.com/40x40?text=SCK" alt="Logo" class="logo-img">
+                <span>SCK</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="../index.html" class="nav-link">Beranda</a>
+                <a href="struktur.html" class="nav-link">Struktur</a>
+                <a href="tentang.html" class="nav-link">Tentang</a>
+                <a href="join.html" class="nav-link">Join</a>
+                <a href="event.html" class="nav-link">Event</a>
+                <a href="alat-bantu.html" class="nav-link">Alat Bantu</a>
+                <a href="set-web.html" class="nav-link active set-web-link">Set Web</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-cogs"></i> Setting Website</h1>
+        <p>Kelola konten website organisasi</p>
+    </div>
+
+    <!-- Login Form (ditampilkan jika belum login) -->
+    <div id="loginForm" class="login-form">
+        <h2><i class="fas fa-lock"></i> Admin Login</h2>
+        <form id="adminLogin">
+            <input type="text" id="loginUsername" placeholder="Username" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Admin Panel (ditampilkan setelah login) -->
+    <div id="adminPanel" class="admin-panel" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2>Panel Admin</h2>
+            <button id="logoutBtn" class="btn btn-secondary" style="padding: 8px 20px;">Logout</button>
+        </div>
+
+        <!-- Set Event Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-calendar-alt"></i> Set Event</h3>
+            <div class="setting-item">
+                <label>Link Foto Profil Event:</label>
+                <input type="text" id="eventImageUrl" placeholder="https://example.com/event.jpg">
+            </div>
+            <div class="setting-item">
+                <label>Deskripsi Event:</label>
+                <textarea id="eventDescription" rows="3" placeholder="Deskripsi event..."></textarea>
+            </div>
+            <div class="setting-item">
+                <label>Status Event:</label>
+                <select id="eventStatus">
+                    <option value="false">Tidak Ada Event</option>
+                    <option value="true">Ada Event</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <label>Kontak Owner Event (pisahkan dengan koma):</label>
+                <input type="text" id="eventContacts" placeholder="6281234567890,6281234567891">
+            </div>
+            <button id="saveEventBtn" class="add-btn">Simpan Event</button>
+        </div>
+
+        <!-- Set Anggota & Divisi Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-users"></i> Set Anggota & Divisi</h3>
+            <div class="setting-item">
+                <label>Total Anggota:</label>
+                <input type="number" id="setTotalMembers" placeholder="Jumlah anggota">
+            </div>
+            <div class="setting-item">
+                <label>Total Divisi:</label>
+                <input type="number" id="setTotalDivisions" placeholder="Jumlah divisi">
+            </div>
+            <button id="saveStatsBtn" class="add-btn">Simpan Statistik</button>
+        </div>
+
+        <!-- Set Anggota Per Divisi Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-layer-group"></i> Set Anggota Per Divisi</h3>
+            <div id="divisionsContainer"></div>
+            <button id="addDivisionBtn" class="add-btn"><i class="fas fa-plus"></i> Tambah Divisi</button>
+        </div>
+
+        <!-- Set Join Links Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-link"></i> Set Link Join</h3>
+            <div class="setting-item">
+                <label>Judul Link Seleksi:</label>
+                <input type="text" id="seleksiTitle" placeholder="Link Seleksi">
+            </div>
+            <div class="setting-item">
+                <label>Deskripsi Link Seleksi:</label>
+                <input type="text" id="seleksiDesc" placeholder="Deskripsi">
+            </div>
+            <div class="setting-item">
+                <label>URL Link Seleksi:</label>
+                <input type="text" id="seleksiUrl" placeholder="https://chat.whatsapp.com/xxxxx">
+            </div>
+            <hr style="margin: 15px 0; border-color: var(--glass-border);">
+            <div class="setting-item">
+                <label>Judul SCK FAMILY:</label>
+                <input type="text" id="familyTitle" placeholder="SCK FAMILY">
+            </div>
+            <div class="setting-item">
+                <label>Deskripsi SCK FAMILY:</label>
+                <input type="text" id="familyDesc" placeholder="Deskripsi">
+            </div>
+            <div class="setting-item">
+                <label>URL SCK FAMILY:</label>
+                <input type="text" id="familyUrl" placeholder="https://chat.whatsapp.com/xxxxx">
+            </div>
+            <button id="saveJoinLinksBtn" class="add-btn">Simpan Link Join</button>
+        </div>
+
+        <!-- Set Akun Admin Section -->
+        <div class="admin-section">
+            <h3><i class="fas fa-user-shield"></i> Set Akun Admin</h3>
+            <div id="adminAccountsList"></div>
+            <div style="margin-top: 15px;">
+                <input type="text" id="newAdminUsername" placeholder="Username baru" style="width: calc(33% - 10px);">
+                <input type="password" id="newAdminPassword" placeholder="Password" style="width: calc(33% - 10px);">
+                <select id="newAdminRole" style="width: calc(33% - 10px);">
+                    <option value="admin">Admin</option>
+                    <option value="moderator">Moderator</option>
+                </select>
+                <button id="addAdminBtn" class="add-btn" style="width: 100%; margin-top: 10px;">+ Tambah Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://via.placeholder.com/50x50?text=SCK" alt="Logo">
+                    <h3>Sekte Creator Kece</h3>
+                    <p>Official Organization</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <a href="../index.html">Beranda</a>
+                    <a href="struktur.html">Struktur</a>
+                    <a href="tentang.html">Tentang</a>
+                    <a href="join.html">Join</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Developer</h4>
+                    <a href="https://wa.me/6281234567890" class="contact-wa">
+                        <i class="fab fa-whatsapp"></i> +62 812-3456-7890
+                    </a>
+                    <a href="only-developer.html" class="dev-link">
+                        <i class="fas fa-lock"></i> Only Developer
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sekte Creator Kece. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Check login status on page load
+        function checkLoginStatus() {
+            if (isAdminLoggedIn() || isDevLoggedIn()) {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadAdminData();
+            } else {
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'none';
+            }
+        }
+
+        // Load all admin data
+        function loadAdminData() {
+            const orgData = organizationData;
+            
+            // Load event data
+            const event = eventData;
+            document.getElementById('eventImageUrl').value = event.imageUrl || '';
+            document.getElementById('eventDescription').value = event.description || '';
+            document.getElementById('eventStatus').value = event.hasEvent ? 'true' : 'false';
+            document.getElementById('eventContacts').value = event.contacts.join(',');
+            
+            // Load stats
+            document.getElementById('setTotalMembers').value = getTotalMembers();
+            document.getElementById('setTotalDivisions').value = getTotalDivisions();
+            
+            // Load divisions
+            loadDivisionsList();
+            
+            // Load join links
+            const links = joinLinks;
+            document.getElementById('seleksiTitle').value = links.seleksi.title;
+            document.getElementById('seleksiDesc').value = links.seleksi.description;
+            document.getElementById('seleksiUrl').value = links.seleksi.url;
+            document.getElementById('familyTitle').value = links.family.title;
+            document.getElementById('familyDesc').value = links.family.description;
+            document.getElementById('familyUrl').value = links.family.url;
+            
+            // Load admin accounts
+            loadAdminAccounts();
+        }
+        
+        function loadDivisionsList() {
+            const container = document.getElementById('divisionsContainer');
+            container.innerHTML = '';
+            organizationData.divisions.forEach((div, index) => {
+                container.innerHTML += `
+                    <div class="setting-item" style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 10px;">
+                        <label>Nama Divisi:</label>
+                        <input type="text" id="divName_${index}" value="${div.name}" style="margin-bottom: 10px;">
+                        <label>Jumlah Anggota:</label>
+                        <input type="number" id="divMembers_${index}" value="${div.members}">
+                        <button class="remove-div-btn" data-index="${index}" style="background: rgba(255,0,0,0.2); border: none; color: red; padding: 5px 10px; border-radius: 10px; margin-top: 10px; cursor: pointer;">Hapus Divisi</button>
+                    </div>
+                `;
+            });
+            
+            // Add remove event listeners
+            document.querySelectorAll('.remove-div-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    removeDivision(index);
+                    loadDivisionsList();
+                });
+            });
+            
+            // Add change event listeners
+            organizationData.divisions.forEach((_, index) => {
+                const nameInput = document.getElementById(`divName_${index}`);
+                const membersInput = document.getElementById(`divMembers_${index}`);
+                if (nameInput) {
+                    nameInput.addEventListener('change', () => {
+                        updateDivisionName(index, nameInput.value);
+                    });
+                }
+                if (membersInput) {
+                    membersInput.addEventListener('change', () => {
+                        updateDivisionMembers(index, parseInt(membersInput.value) || 0);
+                    });
+                }
+            });
+        }
+        
+        function loadAdminAccounts() {
+            const container = document.getElementById('adminAccountsList');
+            const credentials = JSON.parse(localStorage.getItem('adminCredentials')) || validCredentials;
+            container.innerHTML = '<h4>Daftar Akun Admin:</h4>';
+            credentials.forEach((acc, index) => {
+                container.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid var(--glass-border);">
+                        <span><strong>${acc.username}</strong> (${acc.role})</span>
+                        <button class="remove-admin-btn" data-username="${acc.username}" style="background: rgba(255,0,0,0.2); border: none; color: red; padding: 5px 10px; border-radius: 10px; cursor: pointer;">Hapus</button>
+                    </div>
+                `;
+            });
+            
+            document.querySelectorAll('.remove-admin-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const username = btn.dataset.username;
+                    if (confirm(`Hapus akun ${username}?`)) {
+                        removeAdminUser(username);
+                        loadAdminAccounts();
+                    }
+                });
+            });
+        }
+        
+        // Save event
+        document.getElementById('saveEventBtn')?.addEventListener('click', () => {
+            const hasEvent = document.getElementById('eventStatus').value === 'true';
+            const imageUrl = document.getElementById('eventImageUrl').value;
+            const description = document.getElementById('eventDescription').value;
+            const contacts = document.getElementById('eventContacts').value.split(',').map(c => c.trim());
+            setEvent(hasEvent, imageUrl, description);
+            eventData.contacts = contacts;
+            saveEventData();
+            alert('Event berhasil disimpan!');
+        });
+        
+        // Save stats
+        document.getElementById('saveStatsBtn')?.addEventListener('click', () => {
+            const totalMembers = parseInt(document.getElementById('setTotalMembers').value) || 0;
+            const totalDivisions = parseInt(document.getElementById('setTotalDivisions').value) || 0;
+            // Adjust divisions count
+            while (organizationData.divisions.length < totalDivisions) {
+                addDivision(`Divisi Baru ${organizationData.divisions.length + 1}`, 0);
+            }
+            while (organizationData.divisions.length > totalDivisions) {
+                removeDivision(organizationData.divisions.length - 1);
+            }
+            // Update total members (distribute to divisions)
+            const perDivision = Math.floor(totalMembers / totalDivisions);
+            organizationData.divisions.forEach((div, i) => {
+                if (i === organizationData.divisions.length - 1) {
+                    div.members = totalMembers - (perDivision * (totalDivisions - 1));
+                } else {
+                    div.members = perDivision;
+                }
+            });
+            saveOrgData();
+            updateStatsDisplay();
+            loadDivisionsList();
+            alert('Statistik berhasil disimpan!');
+        });
+        
+        // Add division
+        document.getElementById('addDivisionBtn')?.addEventListener('click', () => {
+            const newName = prompt('Nama divisi baru:');
+            if (newName) {
+                addDivision(newName, 0);
+                loadDivisionsList();
+            }
+        });
+        
+        // Save join links
+        document.getElementById('saveJoinLinksBtn')?.addEventListener('click', () => {
+            updateJoinLink('seleksi', 
+                document.getElementById('seleksiTitle').value,
+                document.getElementById('seleksiDesc').value,
+                document.getElementById('seleksiUrl').value
+            );
+            updateJoinLink('family',
+                document.getElementById('familyTitle').value,
+                document.getElementById('familyDesc').value,
+                document.getElementById('familyUrl').value
+            );
+            alert('Link join berhasil disimpan!');
+        });
+        
+        // Add admin
+        document.getElementById('addAdminBtn')?.addEventListener('click', () => {
+            const username = document.getElementById('newAdminUsername').value;
+            const password = document.getElementById('newAdminPassword').value;
+            const role = document.getElementById('newAdminRole').value;
+            if (username && password) {
+                if (addAdminUser(username, password, role)) {
+                    alert('Admin berhasil ditambahkan!');
+                    document.getElementById('newAdminUsername').value = '';
+                    document.getElementById('newAdminPassword').value = '';
+                    loadAdminAccounts();
+                } else {
+                    alert('Username sudah ada!');
+                }
+            } else {
+                alert('Isi username dan password!');
+            }
+        });
+        
+        // Logout
+        document.getElementById('logoutBtn')?.addEventListener('click', () => {
+            logout();
+        });
+        
+        // Login form submit
+        document.getElementById('adminLogin')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            if (loginSetWeb(username, password)) {
+                checkLoginStatus();
+                alert('Login berhasil!');
+            } else {
+                alert('Username atau password salah!');
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+        });
+    </script>
+</body>
+</html>
