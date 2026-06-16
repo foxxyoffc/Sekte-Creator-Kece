@@ -163,8 +163,8 @@ function initVideoControl() {
 
 // ========== LOAD STATS ==========
 function loadStats() {
-    const totalMembers = localStorage.getItem('totalMembers') || '156';
-    const totalDivisions = localStorage.getItem('totalDivisions') || '4';
+    const totalMembers = localStorage.getItem('totalMembers') || '98';
+    const totalDivisions = localStorage.getItem('totalDivisions') || '3';
     
     const membersEl = document.getElementById('totalMembers');
     const divisionsEl = document.getElementById('totalDivisions');
@@ -269,9 +269,7 @@ function loadStrukturData() {
 function loadTentangData() {
     const data = JSON.parse(localStorage.getItem('organizationData')) || {
         divisions: [
-            { name: 'Total Anggota', members: 106 },
-            { name: 'Total Divisi', AllDivisi: 02 },
-            { name: 'Divisi 01', members : 62 },
+            { name: 'Divisi 01', members: 62 },
             { name: 'Divisi 02', members: 17 },
             { name: 'SCK Family', members: 19 }
         ]
