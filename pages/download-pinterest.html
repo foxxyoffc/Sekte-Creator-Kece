@@ -11,6 +11,106 @@
         .ripple { display: none !important; }
         .cursor, .cursor-follower { display: none !important; }
         body { cursor: default !important; }
+        .pin-tools {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        .pin-tool-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .pin-tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: var(--shadow);
+        }
+        .pin-tool-card i {
+            font-size: 3rem;
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+        }
+        .pin-tool-card h3 {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        .pin-tool-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            .pin-tools { grid-template-columns: 1fr; }
+        }
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            max-width: 700px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .input-wrapper input {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        .input-wrapper button {
+            padding: 15px 30px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 15px;
+            color: var(--dark-bg);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .input-wrapper button:hover {
+            transform: scale(1.05);
+        }
+        .result-box {
+            max-width: 700px;
+            margin: 20px auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+            display: none;
+        }
+        .result-box.show {
+            display: block;
+        }
+        .result-box video {
+            width: 100%;
+            border-radius: 15px;
+        }
+        .result-box img {
+            width: 100%;
+            border-radius: 15px;
+        }
+        .download-link-custom {
+            display: inline-block;
+            background: var(--neon-blue);
+            color: var(--dark-bg);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -53,15 +153,35 @@
         <p>Download video atau foto dari Pinterest dengan mudah</p>
     </div>
 
-    <div class="download-container">
-        <input type="text" id="pinterestUrl" class="url-input" placeholder="Masukkan URL Pinterest... (contoh: https://www.pinterest.com/pin/123456789)">
-        <button id="downloadBtn" class="download-btn">
-            <i class="fab fa-pinterest"></i> Download & Proses
-        </button>
-        
-        <div id="pinterestResult" style="margin-top: 30px;"></div>
-        
-        <div style="margin-top: 30px; text-align: center;">
+    <div class="container" style="padding: 20px;">
+
+        <!-- Input + Tombol -->
+        <div class="input-wrapper">
+            <input type="text" id="pinterestUrl" placeholder="Masukkan URL Pinterest... (contoh: https://pin.it/xxxx)">
+            <button id="downloadBtn"><i class="fab fa-pinterest"></i> Download & Proses</button>
+        </div>
+
+        <!-- Hasil -->
+        <div class="result-box" id="pinterestResult">
+            <div id="resultContent"></div>
+        </div>
+
+        <!-- Tools Alternatif -->
+        <h2 style="text-align: center; margin: 40px 0 20px; color: var(--neon-blue);">Atau Gunakan Tools Ini</h2>
+        <div class="pin-tools">
+            <a href="https://pindown.io/id1" target="_blank" class="pin-tool-card">
+                <i class="fas fa-download"></i>
+                <h3>PinDown.io</h3>
+                <p>Download video Pinterest Full HD, 2K, 4K gratis</p>
+            </a>
+            <a href="https://klickpin.com/id/" target="_blank" class="pin-tool-card">
+                <i class="fas fa-download"></i>
+                <h3>KlickPin</h3>
+                <p>Download video, gambar, GIF dari Pinterest</p>
+            </a>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
             <a href="alat-bantu.html" target="_parent" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Kembali ke Alat Bantu
             </a>
@@ -101,23 +221,109 @@
 
     <script src="../js/main.js"></script>
     <script src="../js/auth.js"></script>
-    <script src="../js/tools.js"></script>
     <script>
+        // ========== FUNGSI DOWNLOAD PINTEREST (LANGSUNG DI SINI) ==========
+        function downloadPinterest() {
+            const urlInput = document.getElementById('pinterestUrl');
+            const resultDiv = document.getElementById('pinterestResult');
+            const resultContent = document.getElementById('resultContent');
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                alert('Masukkan URL Pinterest terlebih dahulu!');
+                return;
+            }
+            
+            if (!url.match(/pinterest\.com|pin\.it/i)) {
+                alert('❌ URL bukan dari Pinterest!');
+                return;
+            }
+            
+            resultDiv.classList.add('show');
+            resultContent.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses...</div>';
+            
+            const encodedUrl = encodeURIComponent(url);
+            const apiUrl = `https://api.botcahx.eu.org/api/download/pinterest?apikey=alipaiapikeybaru&url=${encodedUrl}`;
+            
+            fetch(apiUrl)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.result && data.result.data) {
+                        const media = data.result.data;
+                        let html = '';
+                        
+                        if (media.video) {
+                            html = `
+                                <video src="${media.video}" controls></video>
+                                <div style="margin-top: 15px;">
+                                    <a href="${media.video}" download class="download-link-custom"><i class="fas fa-download"></i> Download Video</a>
+                                </div>
+                            `;
+                        } else if (media.image) {
+                            html = `
+                                <img src="${media.image}" alt="Pinterest Image">
+                                <div style="margin-top: 15px;">
+                                    <a href="${media.image}" download class="download-link-custom"><i class="fas fa-download"></i> Download Gambar</a>
+                                </div>
+                            `;
+                        } else if (media.url) {
+                            html = `
+                                <video src="${media.url}" controls></video>
+                                <div style="margin-top: 15px;">
+                                    <a href="${media.url}" download class="download-link-custom"><i class="fas fa-download"></i> Download</a>
+                                </div>
+                            `;
+                        } else {
+                            html = '<div class="alert alert-info">Media tidak ditemukan.</div>';
+                        }
+                        
+                        resultContent.innerHTML = html;
+                    } else {
+                        resultContent.innerHTML = `
+                            <div class="alert alert-info">
+                                <i class="fas fa-exclamation-triangle"></i> Gagal memproses. Coba gunakan tools di bawah ini:
+                            </div>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 15px;">
+                                <a href="https://pindown.io/id1" target="_blank" class="btn btn-primary">Buka PinDown.io</a>
+                                <a href="https://klickpin.com/id/" target="_blank" class="btn btn-secondary">Buka KlickPin</a>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(() => {
+                    resultContent.innerHTML = `
+                        <div class="alert alert-info">
+                            <i class="fas fa-exclamation-triangle"></i> Error. Coba gunakan tools di bawah ini:
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 15px;">
+                            <a href="https://pindown.io/id1" target="_blank" class="btn btn-primary">Buka PinDown.io</a>
+                            <a href="https://klickpin.com/id/" target="_blank" class="btn btn-secondary">Buka KlickPin</a>
+                        </div>
+                    `;
+                });
+        }
+
+        // ========== INIT ==========
         document.addEventListener('DOMContentLoaded', function() {
-            // Init functions
             if (typeof initTheme === 'function') initTheme();
             if (typeof initNavToggle === 'function') initNavToggle();
             if (typeof initMusicControl === 'function') initMusicControl();
             
-            // Fix tombol download
             const btn = document.getElementById('downloadBtn');
             if (btn) {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (typeof downloadPinterest === 'function') {
+                    downloadPinterest();
+                });
+            }
+            
+            // Enter key support
+            const urlInput = document.getElementById('pinterestUrl');
+            if (urlInput) {
+                urlInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
                         downloadPinterest();
-                    } else {
-                        alert('Fungsi download belum siap!');
                     }
                 });
             }
