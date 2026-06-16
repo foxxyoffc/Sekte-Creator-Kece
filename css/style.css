@@ -27,7 +27,7 @@ body {
     cursor: none;
 }
 
-/* Custom Cursor */
+/* ========== CUSTOM CURSOR ========== */
 .cursor {
     position: fixed;
     width: 8px;
@@ -56,25 +56,28 @@ body {
     background: rgba(0, 242, 254, 0.1);
 }
 
-/* Scrollbar */
+/* ========== SCROLLBAR ========== */
 ::-webkit-scrollbar {
     width: 8px;
 }
-
 ::-webkit-scrollbar-track {
     background: var(--dark-bg);
 }
-
 ::-webkit-scrollbar-thumb {
     background: var(--neon-blue);
     border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
     background: var(--neon-cyan);
 }
 
-/* Theme Toggle */
+/* ========== MATIKAN EFEK DEFAULT BROWSER ========== */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* ========== THEME TOGGLE ========== */
 .theme-toggle {
     position: fixed;
     top: 90px;
@@ -100,7 +103,7 @@ body {
     box-shadow: var(--shadow);
 }
 
-/* Music Control */
+/* ========== MUSIC CONTROL ========== */
 .music-control {
     position: fixed;
     top: 20px;
@@ -126,7 +129,7 @@ body {
     box-shadow: var(--shadow);
 }
 
-/* Navigation */
+/* ========== NAVBAR ========== */
 .navbar {
     position: fixed;
     top: 0;
@@ -216,7 +219,7 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Hero Section */
+/* ========== HERO SECTION ========== */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -245,7 +248,7 @@ body {
     z-index: 2;
 }
 
-/* Video Wrapper */
+/* ========== VIDEO WRAPPER ========== */
 .video-wrapper {
     max-width: 800px;
     margin: 0 auto 30px;
@@ -295,7 +298,7 @@ body {
     background: var(--neon-blue);
 }
 
-/* Profile Image */
+/* ========== PROFILE IMAGE ========== */
 .profile-wrapper {
     margin-bottom: 20px;
 }
@@ -322,7 +325,7 @@ body {
     object-fit: cover;
 }
 
-/* Glitch Text */
+/* ========== GLITCH TEXT ========== */
 .glitch-text {
     font-size: 2.5rem;
     font-weight: 800;
@@ -349,7 +352,7 @@ body {
     }
 }
 
-/* DateTime */
+/* ========== DATETIME ========== */
 .datetime-wrapper {
     display: flex;
     justify-content: center;
@@ -370,7 +373,7 @@ body {
     font-family: 'Courier New', monospace;
 }
 
-/* Hero Stats */
+/* ========== HERO STATS ========== */
 .hero-stats {
     display: flex;
     justify-content: center;
@@ -403,7 +406,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* Buttons */
+/* ========== BUTTONS ========== */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -414,6 +417,11 @@ body {
     font-weight: 600;
     transition: all 0.3s ease;
     margin: 0 10px;
+}
+
+.btn:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
 }
 
 .btn-primary {
@@ -446,7 +454,7 @@ body {
     flex-wrap: wrap;
 }
 
-/* Footer */
+/* ========== FOOTER ========== */
 .footer {
     background: var(--card-bg);
     border-top: 1px solid var(--glass-border);
@@ -510,7 +518,7 @@ body {
     font-size: 0.8rem;
 }
 
-/* Page Header */
+/* ========== PAGE HEADER ========== */
 .page-header {
     text-align: center;
     padding: 120px 20px 60px;
@@ -526,7 +534,7 @@ body {
     color: var(--text-secondary);
 }
 
-/* Grid Layouts */
+/* ========== GRID LAYOUTS ========== */
 .grid-2, .grid-3, .grid-4 {
     display: grid;
     gap: 25px;
@@ -539,7 +547,11 @@ body {
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .grid-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 
-/* Cards */
+@media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ========== CARDS ========== */
 .card {
     background: var(--card-bg);
     border-radius: 20px;
@@ -548,13 +560,18 @@ body {
     transition: all 0.3s ease;
 }
 
+.card:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+}
+
 .card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow);
     border-color: var(--neon-blue);
 }
 
-/* Struktur Organisasi */
+/* ========== STRUKTUR ORGANISASI ========== */
 .struktur-grid {
     max-width: 1200px;
     margin: 0 auto;
@@ -582,6 +599,11 @@ body {
     border: 1px solid var(--glass-border);
     transition: all 0.3s ease;
     cursor: pointer;
+}
+
+.leader-card:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
 }
 
 .leader-card:hover {
@@ -620,13 +642,18 @@ body {
     margin-top: 10px;
 }
 
-/* Event Page */
+/* ========== EVENT PAGE ========== */
 .event-card {
     background: var(--card-bg);
     border-radius: 20px;
     overflow: hidden;
     border: 1px solid var(--glass-border);
     transition: all 0.3s ease;
+}
+
+.event-card:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
 }
 
 .event-card:hover {
@@ -676,7 +703,7 @@ body {
     color: var(--dark-bg);
 }
 
-/* Alert */
+/* ========== ALERT ========== */
 .alert {
     padding: 15px;
     border-radius: 10px;
@@ -690,7 +717,7 @@ body {
     color: var(--neon-blue);
 }
 
-/* Login Form */
+/* ========== LOGIN FORM ========== */
 .login-form {
     max-width: 400px;
     margin: 100px auto;
@@ -727,7 +754,12 @@ body {
     margin-top: 20px;
 }
 
-/* Admin Panel */
+.login-form button:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+}
+
+/* ========== ADMIN PANEL ========== */
 .admin-panel {
     max-width: 800px;
     margin: 0 auto;
@@ -776,7 +808,12 @@ body {
     margin-top: 10px;
 }
 
-/* Tool Page */
+.add-btn:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+}
+
+/* ========== TOOL PAGE ========== */
 .tool-card {
     background: var(--card-bg);
     border-radius: 20px;
@@ -784,6 +821,11 @@ body {
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.tool-card:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
 }
 
 .tool-card i {
@@ -806,7 +848,7 @@ body {
     box-shadow: var(--shadow);
 }
 
-/* Download Container */
+/* ========== DOWNLOAD CONTAINER ========== */
 .download-container {
     max-width: 800px;
     margin: 0 auto;
@@ -834,6 +876,11 @@ body {
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.download-btn:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
 }
 
 .download-btn:hover {
@@ -874,96 +921,15 @@ body {
     transition: all 0.3s ease;
 }
 
+.download-link:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+}
+
 .download-link:hover {
     background: var(--neon-cyan);
     transform: scale(1.05);
 }
-
-/* Light Theme */
-body.light-theme {
-    --dark-bg: #f0f2f5;
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --glass-bg: rgba(0, 0, 0, 0.05);
-    --text-primary: #1a1a2e;
-    --text-secondary: #555;
-    --shadow: 0 0 20px rgba(0, 242, 254, 0.2);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
-        background: var(--card-bg);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: left 0.3s ease;
-        gap: 30px;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .nav-toggle {
-        display: flex;
-    }
-    
-    .nav-toggle.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
-    
-    .nav-toggle.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .nav-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -7px);
-    }
-    
-    .music-control, .theme-toggle {
-        top: auto;
-        bottom: 20px;
-    }
-    
-    .music-control {
-        right: 80px;
-    }
-    
-    .theme-toggle {
-        right: 20px;
-    }
-    
-    .hero-stats {
-        gap: 20px;
-    }
-    
-    .stat-item span {
-        font-size: 1.5rem;
-    }
-    
-    .datetime-wrapper {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-    
-    .grid-2, .grid-3, .grid-4 {
-        grid-template-columns: 1fr;
-    }
-    
-    .page-header h1 {
-        font-size: 1.8rem;
-    }
-      }
 
 /* ========== RIPPLE EFFECT (HANYA SAAT KLIK) ========== */
 .ripple {
@@ -987,18 +953,50 @@ body.light-theme {
     }
 }
 
-/* Matikan efek default browser (highlight biru) */
-* {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
+/* ========== LIGHT THEME ========== */
+body.light-theme {
+    --dark-bg: #f0f2f5;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --glass-bg: rgba(0, 0, 0, 0.05);
+    --text-primary: #1a1a2e;
+    --text-secondary: #555;
+    --shadow: 0 0 20px rgba(0, 242, 254, 0.2);
 }
 
-/* Efek saat tombol di-klik (tanpa ripple) */
-.btn:active,
-.leader-card:active,
-.tool-card:active,
-.event-card:active,
-.card:active {
-    transform: scale(0.97);
-    transition: transform 0.1s ease;
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: var(--card-bg);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: left 0.3s ease;
+        gap: 30px;
+    }
+    
+    .nav-menu.active { left: 0; }
+    .nav-toggle { display: flex; }
+    
+    .nav-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+    
+    .music-control, .theme-toggle { top: auto; bottom: 20px; }
+    .music-control { right: 80px; }
+    .theme-toggle { right: 20px; }
+    
+    .hero-stats { gap: 20px; }
+    .stat-item span { font-size: 1.5rem; }
+    .datetime-wrapper { flex-direction: column; align-items: center; }
+    .btn { padding: 10px 20px; font-size: 0.9rem; }
+    .page-header h1 { font-size: 1.8rem; }
 }
