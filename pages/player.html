@@ -62,6 +62,29 @@
             transform: scale(1.1);
             box-shadow: 0 0 20px rgba(0,242,254,0.3);
         }
+        .refresh-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            border: 1px solid rgba(0,242,254,0.2);
+            color: #00f2fe;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        .refresh-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0,242,254,0.3);
+        }
         .loading {
             position: fixed;
             top: 0;
@@ -90,65 +113,46 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .refresh-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 45px;
-            height: 45px;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 9999;
-            border: 1px solid rgba(0,242,254,0.2);
-            color: #00f2fe;
-            font-size: 18px;
-            transition: all 0.3s ease;
-        }
-        .refresh-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(0,242,254,0.3);
-        }
-        /* Navbar di player (opsional) */
-        .nav-player {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(10,10,15,0.9);
-            backdrop-filter: blur(10px);
-            z-index: 9998;
-            padding: 10px 20px;
-            display: none;
-            border-bottom: 1px solid rgba(0,242,254,0.2);
-        }
-        .nav-player a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 0.9rem;
-        }
-        .nav-player a:hover {
-            color: #00f2fe;
-        }
         @media (max-width: 768px) {
-            .nav-player { display: none !important; }
+            .music-control, .theme-toggle, .refresh-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            .music-control { right: 70px; top: 15px; }
+            .theme-toggle { right: 15px; top: 15px; }
+            .refresh-btn { bottom: 15px; right: 15px; }
+        }
+        /* Ripple untuk player */
+        .ripple {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(0, 242, 254, 0.4);
+            transform: scale(0);
+            animation: rippleAnim 0.6s ease-out forwards;
+            pointer-events: none;
+            z-index: 99999;
+            width: 20px;
+            height: 20px;
+            margin-left: -10px;
+            margin-top: -10px;
+        }
+        @keyframes rippleAnim {
+            to { transform: scale(6); opacity: 0; }
+        }
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-    <!-- Loading -->
     <div class="loading" id="loading">
         <i class="fas fa-spinner"></i> Loading...
     </div>
 
-    <!-- Music Control -->
     <div class="music-control" id="musicControl">
         <i class="fas fa-play" id="musicIcon"></i>
         <audio id="bgMusic" loop preload="auto">
@@ -156,17 +160,14 @@
         </audio>
     </div>
     
-    <!-- Theme Toggle -->
     <div class="theme-toggle" id="themeToggle">
         <i class="fas fa-sun"></i>
     </div>
 
-    <!-- Refresh Button -->
     <div class="refresh-btn" id="refreshBtn" title="Refresh Halaman">
         <i class="fas fa-sync-alt"></i>
     </div>
 
-    <!-- Iframe -->
     <iframe id="contentFrame" src="index.html" allow="autoplay"></iframe>
 
     <script>
@@ -179,19 +180,141 @@
         const themeToggle = document.getElementById('themeToggle');
         const refreshBtn = document.getElementById('refreshBtn');
 
-        // ========== AUTO-FIX ALL LINKS DI DALAM IFRAME ==========
+        // ========== RIPPLE EFFECT UNTUK PLAYER ==========
+        let lastTouchTime = 0;
+        let isScrolling = false;
+        let scrollTimeout;
+
+        document.addEventListener('touchstart', function(e) {
+            const touch = e.touches[0];
+            const now = Date.now();
+            if (now - lastTouchTime < 50) return;
+            lastTouchTime = now;
+            isScrolling = false;
+            createRipple(touch.clientX, touch.clientY);
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function(e) {
+            isScrolling = true;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => { isScrolling = false; }, 300);
+        }, { passive: true });
+
+        document.addEventListener('click', function(e) {
+            if (isScrolling) return;
+            createRipple(e.clientX, e.clientY);
+        });
+
+        function createRipple(x, y) {
+            const oldRipples = document.querySelectorAll('.ripple');
+            oldRipples.forEach(el => el.remove());
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            document.body.appendChild(ripple);
+            setTimeout(() => { ripple.remove(); }, 700);
+        }
+
+        document.addEventListener('click', function(e) {
+            const target = e.target.closest('a, button, .btn');
+            if (target) {
+                const ripples = document.querySelectorAll('.ripple');
+                ripples.forEach(el => el.remove());
+            }
+        }, true);
+
+        // ========== INJECT RIPPLE KE IFRAME ==========
+        function injectRippleToIframe() {
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (!iframeDoc) return;
+                
+                const style = iframeDoc.createElement('style');
+                style.textContent = `
+                    .ripple {
+                        position: fixed;
+                        border-radius: 50%;
+                        background: rgba(0, 242, 254, 0.4);
+                        transform: scale(0);
+                        animation: rippleAnim 0.6s ease-out forwards;
+                        pointer-events: none;
+                        z-index: 99999;
+                        width: 20px;
+                        height: 20px;
+                        margin-left: -10px;
+                        margin-top: -10px;
+                    }
+                    @keyframes rippleAnim {
+                        to { transform: scale(6); opacity: 0; }
+                    }
+                    * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+                `;
+                iframeDoc.head.appendChild(style);
+                
+                const script = iframeDoc.createElement('script');
+                script.textContent = `
+                    let lastTouchTime = 0;
+                    let isScrolling = false;
+                    let scrollTimeout;
+                    
+                    document.addEventListener('touchstart', function(e) {
+                        const touch = e.touches[0];
+                        const now = Date.now();
+                        if (now - lastTouchTime < 50) return;
+                        lastTouchTime = now;
+                        isScrolling = false;
+                        createRipple(touch.clientX, touch.clientY);
+                    }, { passive: true });
+                    
+                    document.addEventListener('touchmove', function(e) {
+                        isScrolling = true;
+                        clearTimeout(scrollTimeout);
+                        scrollTimeout = setTimeout(() => { isScrolling = false; }, 300);
+                    }, { passive: true });
+                    
+                    document.addEventListener('click', function(e) {
+                        if (isScrolling) return;
+                        createRipple(e.clientX, e.clientY);
+                    });
+                    
+                    function createRipple(x, y) {
+                        const oldRipples = document.querySelectorAll('.ripple');
+                        oldRipples.forEach(el => el.remove());
+                        const ripple = document.createElement('div');
+                        ripple.className = 'ripple';
+                        ripple.style.left = x + 'px';
+                        ripple.style.top = y + 'px';
+                        document.body.appendChild(ripple);
+                        setTimeout(() => { ripple.remove(); }, 700);
+                    }
+                    
+                    document.addEventListener('click', function(e) {
+                        const target = e.target.closest('a, button, .btn, .leader-card, .tool-card, .event-card, .card');
+                        if (target) {
+                            const ripples = document.querySelectorAll('.ripple');
+                            ripples.forEach(el => el.remove());
+                        }
+                    }, true);
+                `;
+                iframeDoc.head.appendChild(script);
+                
+                console.log('✅ Ripple effect injected to iframe');
+            } catch (e) {
+                console.log('⚠️ Cannot inject ripple to iframe (CORS)');
+            }
+        }
+
+        // ========== AUTO-FIX ALL LINKS DI IFRAME ==========
         function fixAllLinks() {
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                 if (!iframeDoc) return;
 
-                // 1. Semua link <a>
                 const allLinks = iframeDoc.querySelectorAll('a');
                 allLinks.forEach(link => {
                     const href = link.getAttribute('href');
                     const target = link.getAttribute('target');
-                    
-                    // Skip link yang udah punya target, link ke luar, atau anchor
                     if (!target && href && 
                         !href.startsWith('http://') && 
                         !href.startsWith('https://') && 
@@ -203,7 +326,6 @@
                     }
                 });
 
-                // 2. Semua tombol dengan onclick redirect
                 const allButtons = iframeDoc.querySelectorAll('[onclick]');
                 allButtons.forEach(btn => {
                     let onclick = btn.getAttribute('onclick');
@@ -214,49 +336,18 @@
                     }
                 });
 
-                // 3. Semua tombol dengan event listener (via JS) - override
-                // Ini lebih kompleks, tapi kita inject script ke dalam iframe
-                const script = iframeDoc.createElement('script');
-                script.textContent = `
-                    // Override semua link dinamis
-                    document.addEventListener('click', function(e) {
-                        const target = e.target.closest('a');
-                        if (target && target.href && !target.target) {
-                            const href = target.getAttribute('href');
-                            if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript')) {
-                                target.target = '_parent';
-                            }
-                        }
-                    }, true);
-                    
-                    // Override window.open
-                    const originalOpen = window.open;
-                    window.open = function(url, name, features) {
-                        if (!name || name === '_blank') {
-                            return originalOpen(url, '_parent', features);
-                        }
-                        return originalOpen(url, name, features);
-                    };
-                    
-                    console.log('✅ Auto-fix links from inside iframe');
-                `;
-                iframeDoc.head.appendChild(script);
-
                 console.log('✅ Auto-fix links completed!');
             } catch (e) {
                 console.log('⚠️ Cannot access iframe content (CORS) - skip auto-fix');
             }
         }
 
-        // ========== IFRAME LOAD EVENT ==========
+        // ========== IFRAME LOAD ==========
         iframe.addEventListener('load', () => {
-            // Hilangkan loading
             loading.classList.add('hidden');
-            
-            // Fix semua link
             fixAllLinks();
+            injectRippleToIframe();
             
-            // Sinkronin theme dari localStorage
             const savedTheme = localStorage.getItem('theme') || 'dark';
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -270,10 +361,8 @@
             } catch (e) {}
         });
 
-        // ========== MUSIC CONTROL ==========
+        // ========== MUSIC ==========
         let isPlaying = false;
-
-        // Cek state dari localStorage
         if (localStorage.getItem('musicPlaying') === 'true') {
             isPlaying = true;
             musicIcon.className = 'fas fa-stop';
@@ -293,7 +382,7 @@
             localStorage.setItem('musicPlaying', isPlaying);
         });
 
-        // ========== THEME TOGGLE (UNTUK IFRAME) ==========
+        // ========== THEME ==========
         let isDark = localStorage.getItem('theme') !== 'light';
         themeToggle.addEventListener('click', () => {
             isDark = !isDark;
@@ -310,18 +399,18 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
 
-        // ========== REFRESH BUTTON ==========
+        // ========== REFRESH ==========
         refreshBtn.addEventListener('click', () => {
             iframe.src = iframe.src;
             loading.classList.remove('hidden');
         });
 
-        // ========== IF RENDER DI DALAM IFRAME, REDIRECT KE PLAYER ==========
+        // ========== IF IN IFRAME ==========
         if (window.top !== window.self) {
             window.top.location.href = 'player.html';
         }
 
-        // ========== KEYBOARD SHORTCUT ==========
+        // ========== KEYBOARD ==========
         document.addEventListener('keydown', (e) => {
             if (e.key === ' ' || e.key === 'Space') {
                 e.preventDefault();
@@ -334,103 +423,6 @@
 
         console.log('🎵 Player loaded! Musik tetap jalan walau pindah halaman.');
         console.log('⌨️ Shortcut: Space = Play/Stop, R = Refresh');
-
-        // ========== RIPPLE EFFECT UNTUK IFRAME ==========
-function injectRippleToIframe() {
-    try {
-        const iframeDoc = document.getElementById('contentFrame').contentDocument || 
-                          document.getElementById('contentFrame').contentWindow.document;
-        if (!iframeDoc) return;
-        
-        // Inject CSS
-        const style = iframeDoc.createElement('style');
-        style.textContent = `
-            .ripple {
-                position: fixed;
-                border-radius: 50%;
-                background: rgba(0, 242, 254, 0.4);
-                transform: scale(0);
-                animation: rippleAnim 0.6s ease-out forwards;
-                pointer-events: none;
-                z-index: 99999;
-                width: 20px;
-                height: 20px;
-                margin-left: -10px;
-                margin-top: -10px;
-            }
-            @keyframes rippleAnim {
-                to { transform: scale(6); opacity: 0; }
-            }
-            * {
-                -webkit-tap-highlight-color: transparent;
-                -webkit-touch-callout: none;
-            }
-            .btn:active, .leader-card:active, .tool-card:active,
-            .event-card:active, .card:active {
-                transform: scale(0.97);
-                transition: transform 0.1s ease;
-            }
-        `;
-        iframeDoc.head.appendChild(style);
-        
-        // Inject JS
-        const script = iframeDoc.createElement('script');
-        script.textContent = `
-            let lastTouchTime = 0;
-            let isScrolling = false;
-            let scrollTimeout;
-            
-            document.addEventListener('touchstart', function(e) {
-                const touch = e.touches[0];
-                const now = Date.now();
-                if (now - lastTouchTime < 50) return;
-                lastTouchTime = now;
-                isScrolling = false;
-                createRipple(touch.clientX, touch.clientY);
-            }, { passive: true });
-            
-            document.addEventListener('touchmove', function(e) {
-                isScrolling = true;
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => { isScrolling = false; }, 300);
-            }, { passive: true });
-            
-            document.addEventListener('click', function(e) {
-                if (isScrolling) return;
-                createRipple(e.clientX, e.clientY);
-            });
-            
-            function createRipple(x, y) {
-                const oldRipples = document.querySelectorAll('.ripple');
-                oldRipples.forEach(el => el.remove());
-                const ripple = document.createElement('div');
-                ripple.className = 'ripple';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                document.body.appendChild(ripple);
-                setTimeout(() => { ripple.remove(); }, 700);
-            }
-            
-            document.addEventListener('click', function(e) {
-                const target = e.target.closest('a, button, .btn, .leader-card, .tool-card, .event-card, .card');
-                if (target) {
-                    const ripples = document.querySelectorAll('.ripple');
-                    ripples.forEach(el => el.remove());
-                }
-            }, true);
-        `;
-        iframeDoc.head.appendChild(script);
-        
-        console.log('✅ Ripple effect injected to iframe');
-    } catch (e) {
-        console.log('⚠️ Cannot inject ripple to iframe (CORS)');
-    }
-}
-
-// Panggil setelah iframe load
-document.getElementById('contentFrame').addEventListener('load', function() {
-    injectRippleToIframe();
-});
     </script>
 </body>
 </html>
