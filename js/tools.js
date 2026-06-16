@@ -13,7 +13,6 @@ async function downloadTikTok() {
     resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses video...</div>';
     
     try {
-        // Menggunakan API tikwm.com (gratis, tanpa API key)
         const response = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
         const data = await response.json();
         
@@ -24,8 +23,9 @@ async function downloadTikTok() {
             const duration = data.data.duration || '0';
             const music = data.data.music_info?.title || 'Unknown';
             
-            // Simpan ke history
-            addTiktokHistory(url, { title, author, videoUrl });
+            if (typeof addTiktokHistory === 'function') {
+                addTiktokHistory(url, { title, author, videoUrl });
+            }
             
             resultDiv.innerHTML = `
                 <div class="video-preview">
@@ -63,14 +63,19 @@ async function downloadPinterest() {
         return;
     }
     
-    resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses video/gambar...</div>';
+    resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses...</div>';
     
     try {
-        // Menggunakan API pinterest video downloader
-        const response = await fetch(`https://pinterestdownloader.io/api/download?url=${encodeURIComponent(url)}`);
+        const response = await fetch(`https://pinterest-video-downloader.p.rapidapi.com/url?url=${encodeURIComponent(url)}`, {
+            headers: {
+                'x-rapidapi-key': 'YOUR_API_KEY_HERE',
+                'x-rapidapi-host': 'pinterest-video-downloader.p.rapidapi.com'
+            }
+        });
+        
         const data = await response.json();
         
-        if (data.success && data.media_url) {
+        if (data && data.media_url) {
             const mediaUrl = data.media_url;
             const isVideo = mediaUrl.includes('.mp4') || mediaUrl.includes('.mov');
             const title = data.title || 'Pinterest Media';
@@ -97,7 +102,6 @@ async function downloadPinterest() {
                 `;
             }
         } else {
-            // Fallback: alternative method using no-api
             resultDiv.innerHTML = `
                 <div class="video-preview">
                     <div class="alert alert-info">
@@ -121,32 +125,89 @@ async function downloadPinterest() {
     }
 }
 
-// ========== COPY CAPTION FUNCTION ==========
+// ========== YOUTUBE DOWNLOADER ==========
 
-function copyCaption() {
-    const captionText = document.querySelector('.video-caption');
-    if (captionText) {
-        let text = captionText.innerText.replace('📝 Caption:', '').trim();
-        text = text.replace('Caption:', '').trim();
-        navigator.clipboard.writeText(text);
+async function downloadYouTube(type = 'video') {
+    const urlInput = document.getElementById('youtubeUrl');
+    const resultDiv = document.getElementById('youtubeResult');
+    const url = urlInput.value.trim();
+    
+    if (!url) {
+        alert('Masukkan URL YouTube terlebih dahulu!');
+        return;
+    }
+    
+    resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses video...</div>';
+    
+    try {
+        const apiUrl = `https://api.ryzendesu.vip/api/downloader/ytmp4?url=${encodeURIComponent(url)}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
         
-        // Show notification
-        const btn = document.querySelector('.video-info button');
-        const originalText = btn?.innerHTML;
-        if (btn) {
-            btn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-            }, 2000);
+        if (data.status === 200 || data.url) {
+            const videoUrl = data.url || data.download_url;
+            const title = data.title || 'YouTube Video';
+            const duration = data.duration || 'Unknown';
+            const quality = type === 'video' ? (data.quality || '720p') : 'MP3 Audio';
+            
+            if (type === 'video') {
+                resultDiv.innerHTML = `
+                    <div class="video-preview">
+                        <video src="${videoUrl}" controls></video>
+                        <div class="video-info">
+                            <p><strong><i class="fab fa-youtube"></i> Judul:</strong> ${title}</p>
+                            <p><strong><i class="fas fa-clock"></i> Durasi:</strong> ${duration}</p>
+                            <p><strong><i class="fas fa-tachometer-alt"></i> Kualitas:</strong> ${quality}</p>
+                            <a href="${videoUrl}" download class="download-link"><i class="fas fa-download"></i> Download Video (${quality})</a>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const audioApi = `https://api.ryzendesu.vip/api/downloader/ytmp3?url=${encodeURIComponent(url)}`;
+                const audioResponse = await fetch(audioApi);
+                const audioData = await audioResponse.json();
+                const audioUrl = audioData.url || audioData.download_url;
+                
+                resultDiv.innerHTML = `
+                    <div class="video-preview">
+                        <div style="text-align: center; padding: 20px;">
+                            <i class="fas fa-music" style="font-size: 3rem; color: var(--neon-blue);"></i>
+                        </div>
+                        <div class="video-info">
+                            <p><strong><i class="fab fa-youtube"></i> Judul:</strong> ${title}</p>
+                            <p><strong><i class="fas fa-clock"></i> Durasi:</strong> ${duration}</p>
+                            <p><strong><i class="fas fa-file-audio"></i> Format:</strong> MP3</p>
+                            <a href="${audioUrl}" download class="download-link"><i class="fas fa-download"></i> Download Audio (MP3)</a>
+                        </div>
+                    </div>
+                `;
+            }
         } else {
-            alert('Caption berhasil disalin!');
+            resultDiv.innerHTML = `
+                <div class="video-preview">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Untuk download YouTube, silakan gunakan situs alternatif:<br><br>
+                        <a href="https://yt1s.com" target="_blank" style="color: var(--neon-blue); margin-right: 15px;">yt1s.com</a>
+                        <a href="https://savefrom.net" target="_blank" style="color: var(--neon-blue); margin-right: 15px;">savefrom.net</a>
+                        <a href="https://y2mate.com" target="_blank" style="color: var(--neon-blue);">y2mate.com</a>
+                    </div>
+                </div>
+            `;
         }
-    } else {
-        alert('Tidak ada caption untuk disalin.');
+    } catch (error) {
+        console.error('YouTube Download Error:', error);
+        resultDiv.innerHTML = `
+            <div class="video-preview">
+                <div class="alert alert-info">
+                    <i class="fas fa-exclamation-triangle"></i> Gagal memproses.<br><br>
+                    <a href="https://yt1s.com" target="_blank" style="color: var(--neon-blue);">Klik di sini untuk download via yt1s.com</a>
+                </div>
+            </div>
+        `;
     }
 }
 
-// ========== INSTAGRAM DOWNLOADER (EXTRA TOOL) ==========
+// ========== INSTAGRAM DOWNLOADER ==========
 
 async function downloadInstagram() {
     const urlInput = document.getElementById('instagramUrl');
@@ -161,55 +222,82 @@ async function downloadInstagram() {
     resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses...</div>';
     
     try {
-        // Using instagram API
-        const response = await fetch(`https://insta-api.vercel.app/api/video?url=${encodeURIComponent(url)}`);
+        const apiUrl = `https://api.ryzendesu.vip/api/downloader/igdl?url=${encodeURIComponent(url)}`;
+        const response = await fetch(apiUrl);
         const data = await response.json();
         
-        if (data.url) {
+        if (data.status === 200 && data.url) {
+            const mediaUrl = data.url;
+            const isVideo = mediaUrl.includes('.mp4') || mediaUrl.includes('.mov');
+            const caption = data.caption || 'Instagram Media';
+            const username = data.username || 'instagram_user';
+            
+            if (isVideo) {
+                resultDiv.innerHTML = `
+                    <div class="video-preview">
+                        <video src="${mediaUrl}" controls></video>
+                        <div class="video-info">
+                            <p><strong><i class="fab fa-instagram"></i> Username:</strong> @${username}</p>
+                            <p class="video-caption"><strong><i class="fas fa-caption"></i> Caption:</strong> ${caption.substring(0, 200)}${caption.length > 200 ? '...' : ''}</p>
+                            <a href="${mediaUrl}" download class="download-link"><i class="fas fa-download"></i> Download Video</a>
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="video-preview">
+                        <img src="${mediaUrl}" style="width: 100%; border-radius: 15px;" alt="Instagram Image">
+                        <div class="video-info">
+                            <p><strong><i class="fab fa-instagram"></i> Username:</strong> @${username}</p>
+                            <p class="video-caption"><strong><i class="fas fa-caption"></i> Caption:</strong> ${caption.substring(0, 200)}${caption.length > 200 ? '...' : ''}</p>
+                            <a href="${mediaUrl}" download class="download-link"><i class="fas fa-download"></i> Download Gambar</a>
+                        </div>
+                    </div>
+                `;
+            }
+        } else {
             resultDiv.innerHTML = `
                 <div class="video-preview">
-                    <video src="${data.url}" controls></video>
-                    <div class="video-info">
-                        <a href="${data.url}" download class="download-link"><i class="fas fa-download"></i> Download Video</a>
+                    <div class="alert alert-info">
+                        <i class="fas fa-exclamation-triangle"></i> Gagal memproses. Pastikan URL valid.<br><br>
+                        <small>URL: <a href="${url}" target="_blank" style="color: var(--neon-blue); word-break: break-all;">${url}</a></small>
                     </div>
                 </div>
             `;
-        } else {
-            resultDiv.innerHTML = '<div class="alert alert-info">Gagal memproses. Pastikan URL valid.</div>';
         }
     } catch (error) {
-        resultDiv.innerHTML = '<div class="alert alert-info">Gagal memproses. Coba lagi nanti.</div>';
-    }
-}
-
-// ========== YOUTUBE DOWNLOADER (EXTRA TOOL) ==========
-
-async function downloadYoutube() {
-    const urlInput = document.getElementById('youtubeUrl');
-    const resultDiv = document.getElementById('youtubeResult');
-    const url = urlInput.value.trim();
-    
-    if (!url) {
-        alert('Masukkan URL YouTube terlebih dahulu!');
-        return;
-    }
-    
-    resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Memproses...</div>';
-    
-    try {
-        // Using youtube API (limited)
+        console.error('Instagram Download Error:', error);
         resultDiv.innerHTML = `
             <div class="video-preview">
                 <div class="alert alert-info">
-                    <i class="fas fa-info-circle"></i> Untuk download YouTube, silakan gunakan situs:<br>
-                    <a href="https://yt1s.com" target="_blank" style="color: var(--neon-blue);">yt1s.com</a> atau 
-                    <a href="https://savefrom.net" target="_blank" style="color: var(--neon-blue);">savefrom.net</a><br><br>
-                    <small>URL video: <a href="${url}" target="_blank" style="color: var(--neon-blue); word-break: break-all;">${url.substring(0, 50)}...</a></small>
+                    <i class="fas fa-exclamation-triangle"></i> Gagal memproses. Coba lagi nanti.
                 </div>
             </div>
         `;
-    } catch (error) {
-        resultDiv.innerHTML = '<div class="alert alert-info">Gagal memproses.</div>';
+    }
+}
+
+// ========== COPY CAPTION FUNCTION ==========
+
+function copyCaption() {
+    const captionText = document.querySelector('.video-caption');
+    if (captionText) {
+        let text = captionText.innerText.replace('📝 Caption:', '').trim();
+        text = text.replace('Caption:', '').trim();
+        navigator.clipboard.writeText(text);
+        
+        const btn = document.querySelector('.video-info button');
+        if (btn) {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 2000);
+        } else {
+            alert('Caption berhasil disalin!');
+        }
+    } else {
+        alert('Tidak ada caption untuk disalin.');
     }
 }
 
@@ -258,51 +346,15 @@ function validateUrl(url, type) {
         youtube: /(youtube\.com|youtu\.be)/
     };
     
-    if (patterns[type] && patterns[type].test(url)) {
-        return true;
-    }
-    return false;
+    return patterns[type] ? patterns[type].test(url) : false;
 }
 
-function autoDetectUrl() {
-    const urlInput = document.getElementById('autoUrl');
-    const resultDiv = document.getElementById('autoResult');
-    const url = urlInput.value.trim();
-    
-    if (!url) {
-        alert('Masukkan URL terlebih dahulu!');
-        return;
-    }
-    
-    if (validateUrl(url, 'tiktok')) {
-        downloadTikTok();
-    } else if (validateUrl(url, 'instagram')) {
-        downloadInstagram();
-    } else if (validateUrl(url, 'pinterest')) {
-        downloadPinterest();
-    } else if (validateUrl(url, 'youtube')) {
-        downloadYoutube();
-    } else {
-        resultDiv.innerHTML = '<div class="alert alert-info">Platform tidak dikenali. Silakan pilih tool yang sesuai.</div>';
-    }
-}
-
-// ========== INITIALIZATION ==========
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Load history if on history page
-    if (document.getElementById('historyContainer')) {
-        showTiktokHistory();
-    }
-});
-
-// Export functions for global use
+// ========== EXPORT FUNCTIONS ==========
 window.downloadTikTok = downloadTikTok;
 window.downloadPinterest = downloadPinterest;
+window.downloadYouTube = downloadYouTube;
 window.downloadInstagram = downloadInstagram;
-window.downloadYoutube = downloadYoutube;
 window.copyCaption = copyCaption;
-window.autoDetectUrl = autoDetectUrl;
 window.showTiktokHistory = showTiktokHistory;
 window.clearHistory = clearHistory;
 window.validateUrl = validateUrl;
